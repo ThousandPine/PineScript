@@ -7,7 +7,7 @@ DEPS=$(wildcard ./*.h)
 lex.yy.c: lex.l
 	flex lex.l
 
-$(TAR): $(SRC) $(DEPS)
+$(TAR): $(SRC) $(DEPS) lex.yy.c
 	$(CC) $(CFLAGS) $(SRC) -o $(TAR)
 
 all: $(TAR)
