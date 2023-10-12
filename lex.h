@@ -4,6 +4,8 @@ enum token_type {
     WHILE,
     DO,
     INT,
+    CHAR,
+
     ADD,
     SUB,
     MUL,
@@ -15,14 +17,19 @@ enum token_type {
     LT,
     GEQ,
     LEQ,
+
     COMMA,
     SEMI,
     LBRACE,
     RBRACE,
     LPAREN,
     RPAREN,
+    LBRACKET,
+    RBRACKET,
+
     ID,
-    NUM
+    NUM,
+    STR
 };
 
 void output(enum token_type type, const char *val);

@@ -17,17 +17,19 @@ void output(enum token_type type, const char *val)
     case NUM:
         fprintf(out_file, "(%d, %s)\n", type, val);
         break;
+    case STR:
+        fprintf(out_file, "(%d, %s)\n", type, val);
+        break;
     default:
-        fprintf(out_file, "(%d, )[%s]\n", type, val);
+        fprintf(out_file, "(%d, \t)\n", type);
         break;
     }
 }
 
 int main(int argc, char **argv)
 {
-    yyin = fopen("./sample.txt", "r");
+    yyin = fopen("./test.txt", "r");
     out_file = fopen("./lex.txt", "w");
-
     yylex();
     yywrap();
 

@@ -5,14 +5,14 @@
 #define OUTPUT(x) {output(x, yytext);}
 %}
 
-white               [\n\t ]
+white               [ \n\t\r\f]
 line_comment        \/.*\n
 block_comment       \/\*([^\*]|\*[^/])*\*\/
 digit               [0-9]
 letter              [a-zA-Z]
 id                  ({letter}|_)({letter}|{digit}|_)*
-number              [+-]?{digit}+(\.{digit}*)?([eE]{digit}*)?
-string              "[^\n]*"
+number              [+-]?{digit}+(\.{digit}*)?([eE][+-]?{digit}*)?
+string              \"[^"]*\"
 
 %%
 
@@ -25,6 +25,7 @@ string              "[^\n]*"
 "while" OUTPUT(WHILE)
 "do"    OUTPUT(DO)
 "int"   OUTPUT(INT)
+"char"  OUTPUT(CHAR)
 
 "+"     OUTPUT(ADD)
 "-"     OUTPUT(SUB)
@@ -44,9 +45,12 @@ string              "[^\n]*"
 "}"     OUTPUT(RBRACE)
 "("     OUTPUT(LPAREN)
 ")"     OUTPUT(RPAREN)
+"["     OUTPUT(LBRACKET)
+"]"     OUTPUT(RBRACKET)
 
 {id}        OUTPUT(ID)
 {number}    OUTPUT(NUM)
+{string}    OUTPUT(STR)
 .           {printf("\nERROR unknow '%s'\n", yytext);}
 
 %%
