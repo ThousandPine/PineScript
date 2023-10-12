@@ -5,7 +5,7 @@
 #define OUTPUT(x) {output(x, yytext);}
 %}
 
-white               [ \n\t\r\f]
+white               [ \n\t\r\f]|(\\\n)
 line_comment        \/.*\n
 block_comment       \/\*([^\*]|\*[^/])*\*\/
 digit               [0-9]
