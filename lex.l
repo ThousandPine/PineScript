@@ -12,7 +12,7 @@ digit               [0-9]
 letter              [a-zA-Z]
 id                  ({letter}|_)({letter}|{digit}|_)*
 number              [+-]?{digit}+(\.{digit}*)?([eE][+-]?{digit}*)?
-string              \"([^"]|[\"])*\"
+string              \"([^"]|\\\")*\"
 
 %%
 
