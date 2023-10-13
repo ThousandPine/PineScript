@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "lex.h"
 
-#define OUTPUT(x) {output(x, yytext);}
+#define RET(x) {output(x, yytext);}
 %}
 
 white               [ \n\t\r\f]|(\\\n)
@@ -20,37 +20,37 @@ string              \"([^"]|\\\")*\"
 {line_comment}
 {block_comment}
 
-"if"    OUTPUT(IF)
-"else"  OUTPUT(ELSE)
-"while" OUTPUT(WHILE)
-"do"    OUTPUT(DO)
-"int"   OUTPUT(INT)
-"char"  OUTPUT(CHAR)
+"if"    RET(IF)
+"else"  RET(ELSE)
+"while" RET(WHILE)
+"do"    RET(DO)
+"int"   RET(INT)
+"char"  RET(CHAR)
 
-"+"     OUTPUT(ADD)
-"-"     OUTPUT(SUB)
-"*"     OUTPUT(MUL)
-"/"     OUTPUT(DIV)
-"="     OUTPUT(ASSIGN)
-"=="    OUTPUT(EQ)
-"!="    OUTPUT(NEQ)
-">"     OUTPUT(GT)
-"<"     OUTPUT(LT)
-">="    OUTPUT(GEQ)
-"<="    OUTPUT(LEQ)
+"+"     RET(ADD)
+"-"     RET(SUB)
+"*"     RET(MUL)
+"/"     RET(DIV)
+"="     RET(ASSIGN)
+"=="    RET(EQ)
+"!="    RET(NEQ)
+">"     RET(GT)
+"<"     RET(LT)
+">="    RET(GEQ)
+"<="    RET(LEQ)
 
-","     OUTPUT(COMMA)
-";"     OUTPUT(SEMI)
-"{"     OUTPUT(LBRACE)
-"}"     OUTPUT(RBRACE)
-"("     OUTPUT(LPAREN)
-")"     OUTPUT(RPAREN)
-"["     OUTPUT(LBRACKET)
-"]"     OUTPUT(RBRACKET)
+","     RET(COMMA)
+";"     RET(SEMI)
+"{"     RET(LBRACE)
+"}"     RET(RBRACE)
+"("     RET(LPAREN)
+")"     RET(RPAREN)
+"["     RET(LBRACKET)
+"]"     RET(RBRACKET)
 
-{id}        OUTPUT(ID)
-{number}    OUTPUT(NUM)
-{string}    OUTPUT(STR)
+{id}        RET(ID)
+{number}    RET(NUM)
+{string}    RET(STR)
 .           {printf("\nERROR unknow '%s'\n", yytext);}
 
 %%
