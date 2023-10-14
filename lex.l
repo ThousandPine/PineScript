@@ -7,7 +7,7 @@
 
 %option noyywrap
 
-white               [ \n\t\r\f]|(\\\n)
+white               [ \t\r\f]|(\\\n)
 line_comment        \/.*\n
 block_comment       \/\*([^\*]|\*[^/])*\*\/
 digit               [0-9]
@@ -41,8 +41,9 @@ string              \"([^"]|\\\")*\"
 ">="    RET(GEQ)
 "<="    RET(LEQ)
 
+"\n"    RET(EOL)
+";"     RET(EOL)
 ","     RET(COMMA)
-";"     RET(SEMI)
 "{"     RET(LBRACE)
 "}"     RET(RBRACE)
 "("     RET(LPAREN)

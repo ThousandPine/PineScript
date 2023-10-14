@@ -7,7 +7,7 @@ int yyerror(char *);
 
 %token IF ELSE WHILE DO INT CHAR
 %token ADD SUB MUL DIV ASSIGN EQ NEQ GT LT GEQ LEQ
-%token COMMA SEMI LBRACE RBRACE LPAREN RPAREN LBRACKET RBRACKET
+%token EOL COMMA LBRACE RBRACE LPAREN RPAREN LBRACKET RBRACKET
 %token ID NUM STR
 
 %left ADD
@@ -15,7 +15,11 @@ int yyerror(char *);
 
 %%
 
-    S: expr {printf("res:%d\n", $1);}
+    S: S expr eol {printf("res:%d\n", $2);}
+        | /* Epsilon */
+
+    eol: EOL eol
+        | EOL
 
     expr: NUM       {$$ = $1; printf("NUM:%d\n", $1);}        
         | expr ADD expr {$$ = $1 + $3;}
