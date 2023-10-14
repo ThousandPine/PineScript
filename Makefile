@@ -23,6 +23,6 @@ run: all
 clean:
 	rm -rf *.bin $(GEN_SRC) $(GEN_DEPS)
 
-rebuild: clear all
+rebuild: clean all
 
 .PHONY: clean
