@@ -10,16 +10,15 @@ int yyerror(char *);
 %token EOL COMMA LBRACE RBRACE LPAREN RPAREN LBRACKET RBRACKET
 %token ID NUM STR
 
+%left COMMA
 %left ADD
 %left MUL
 
 %%
 
-    S: S expr eol {printf("res:%d\n", $2);}
+    S: S expr EOL {printf("res:%d\n", $2);}
+        | S EOL
         | /* Epsilon */
-
-    eol: EOL eol
-        | EOL
 
     expr: NUM       {$$ = $1; printf("NUM:%d\n", $1);}        
         | expr ADD expr {$$ = $1 + $3;}
