@@ -1,9 +1,11 @@
 %{
 #include <stdio.h>
-#include "lex.h"
+#include "y.tab.h"
 
-#define RET(x) {output(x, yytext);}
+#define RET(x) {return x;}
 %}
+
+%option noyywrap
 
 white               [ \n\t\r\f]|(\\\n)
 line_comment        \/.*\n
@@ -49,7 +51,7 @@ string              \"([^"]|\\\")*\"
 "]"     RET(RBRACKET)
 
 {id}        RET(ID)
-{number}    RET(NUM)
+{number}    {yylval = atoi(yytext); return NUM;}
 {string}    RET(STR)
 .           {printf("\nERROR unknow '%s'\n", yytext);}
 
