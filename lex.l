@@ -7,7 +7,7 @@
 void output(enum yytokentype type, const char *typename, const char *text);
 %}
 
-%option noyywrap
+%option noyywrap yylineno
 
 white               [ \t\r\f]|(\\\n)
 line_comment        \/.*\n
@@ -56,6 +56,6 @@ string              \"([^"]|\\\")*\"
 {id}        RET(ID)
 {number}    {yylval = atoi(yytext); RET(NUM);}
 {string}    RET(STR)
-.           {printf("\nERROR unknow '%s'\n", yytext);}
+.           {printf("Error line %d unknow '%s'\n", yylineno, yytext);}
 
 %%
