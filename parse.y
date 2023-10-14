@@ -11,18 +11,27 @@ int yyerror(char *);
 %token ID NUM STR
 
 %left COMMA
-%left ADD
-%left MUL
+%left ADD SUB
+%left MUL DIV
+%left LPAREN RPAREN
 
 %%
 
-    S: S expr EOL {printf("res:%d\n", $2);}
-        | S EOL
-        | /* Epsilon */
+    statement: statement expr EOL {printf("res:%d\n", $2);}
+            | statement EOL
+            | statement block
+            | /* Epsilon */
 
-    expr: NUM       {$$ = $1; printf("NUM:%d\n", $1);}        
-        | expr ADD expr {$$ = $1 + $3;}
-        | expr MUL expr {$$ = $1 * $3;}
+    block: LBRACE statement RBRACE  {printf("block\n");}
+
+    expr: NUM       {$$ = $1;}        
+        | SUB expr  {$$ = -$2;}
+        | ADD expr  {$$ = -$2;}
         | expr COMMA expr {$$ = $3;}
+        | expr ADD expr {$$ = $1 + $3;}
+        | expr SUB expr {$$ = $1 - $3;}
+        | expr MUL expr {$$ = $1 * $3;}
+        | expr DIV expr {$$ = $1 / $3;}
+        | LPAREN expr RPAREN {$$ = $2;}
 
 %%
