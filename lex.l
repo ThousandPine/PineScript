@@ -5,6 +5,8 @@
 #define OUTPUT(x) {output(x, yytext);}
 %}
 
+%option yylineno
+
 white               [ \n\t\r\f]|(\\\n)
 line_comment        \/.*\n
 block_comment       \/\*([^\*]|\*[^/])*\*\/
@@ -51,6 +53,6 @@ string              \"([^"]|\\\")*\"
 {id}        OUTPUT(ID)
 {number}    OUTPUT(NUM)
 {string}    OUTPUT(STR)
-.           {printf("\nERROR unknow '%s'\n", yytext);}
+.           {printf("Error line %d unknow '%s'\n", yylineno, yytext);}
 
 %%
