@@ -10,7 +10,7 @@ lex.yy.c: lex.l
 	flex lex.l
 
 y.tab.c y.tab.h: parse.y
-	bison parse.y -d -o y.tab.c
+	bison parse.y -dv -Wcounterexamples -o y.tab.c
 
 $(TAR): $(SRC) $(DEPS) $(GEN_SRC) $(GEN_DEPS)
 	$(CC) $(CFLAGS) $(SRC) -o $(TAR)
