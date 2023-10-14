@@ -23,5 +23,6 @@ int yyerror(char *);
     expr: NUM       {$$ = $1; printf("NUM:%d\n", $1);}        
         | expr ADD expr {$$ = $1 + $3;}
         | expr MUL expr {$$ = $1 * $3;}
+        | expr COMMA expr {$$ = $3;}
 
 %%
