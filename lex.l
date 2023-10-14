@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include "y.tab.h"
 
-#define RET(x) {return x;}
+#define RET(x) {output(x, #x, yytext) ; return x;}
+
+void output(enum yytokentype type, const char *typename, const char *text);
 %}
 
 %option noyywrap
@@ -52,7 +54,7 @@ string              \"([^"]|\\\")*\"
 "]"     RET(RBRACKET)
 
 {id}        RET(ID)
-{number}    {yylval = atoi(yytext); return NUM;}
+{number}    {yylval = atoi(yytext); RET(NUM);}
 {string}    RET(STR)
 .           {printf("\nERROR unknow '%s'\n", yytext);}
 
