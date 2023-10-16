@@ -4,6 +4,8 @@
 FILE *lex_out;
 const char *lex_out_path = "./lex.out";
 
+extern int yylineno;
+extern char *yytext;
 extern FILE *yyin;
 extern int yyparse();
 
@@ -33,6 +35,6 @@ int main(int argc, char **argv)
 
 int yyerror(char *s)
 {
-    printf("yyerror: %s\n", s);
+    printf("yyerror: line %d '%s' %s\n", yylineno, yytext, s);
     return 1;
 }
