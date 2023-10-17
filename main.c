@@ -14,10 +14,10 @@ void output(enum yytokentype type, const char *typename, const char *text)
     switch (type)
     {
     case ID:
-        fprintf(lex_out, "%s(%d, \"%s\")\n", typename, type, text);
+        fprintf(lex_out, "%s \t(%d, \"%s\")\n", typename, type, text);
         break;
     default:
-        fprintf(lex_out, "%s(%d, %s)\n", typename, type, text);
+        fprintf(lex_out, "%s \t(%d, %s)\n", typename, type, text);
         break;
     }
     fflush(lex_out);
@@ -35,6 +35,6 @@ int main(int argc, char **argv)
 
 int yyerror(char *s)
 {
-    printf("yyerror: line %d '%s' %s\n", yylineno, yytext, s);
+    printf("%s: line %d '%s'\n", s, yylineno, yytext);
     return 1;
 }
