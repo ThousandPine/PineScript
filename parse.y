@@ -95,20 +95,20 @@ int yyerror(char *);
         | CHAR
         | STRING
         | fn_call
-        | val_trans
-        | '!' expr
         | '(' expr ')'
-        | ID '=' expr
-        | expr '+' expr
-        | expr '-' expr
+        | '!' expr
+        | expr AS type
         | expr '*' expr
         | expr '/' expr
         | expr '%' expr
+        | expr '+' expr
+        | expr '-' expr
         | expr '>' expr
         | expr '<' expr
-        | expr EQ expr
         | expr GEQ expr
         | expr LEQ expr
+        | expr EQ expr
+        | ID '=' expr
 
     /*  */
 
@@ -119,10 +119,4 @@ int yyerror(char *);
 
     fcall_arg_list: expr
                   | expr ',' fcall_arg_list
-    
-    /*  */
-    val_trans: expr val_trans_list
-    
-    val_trans_list: AS type
-                  | AS type val_trans_list
 %%
