@@ -9,14 +9,16 @@ void output(enum yytokentype type, const char *typename, const char *text);
 
 %option noyywrap yylineno
 
-white               [ \t\r\f]|(\\\n)
+white               [ \n\t\r\f]|(\\\n)
 line_comment        \/.*\n
 block_comment       \/\*([^\*]|\*[^/])*\*\/
 digit               [0-9]
 letter              [a-zA-Z]
 id                  ({letter}|_)({letter}|{digit}|_)*
-number              {digit}+(\.{digit}*)?([eE][+-]?{digit}*)?
-string              \"([^"]|\\\")*\"
+intger              {digit}+
+float               {digit}+(\.{digit}*)?([eE][+-]?{digit}*)?
+char                \'([^'\\]|\\['"?\\abfnrtv]|\\[0-7]{1,3})\'
+string              \"([^"\\]|\\['"?\\abfnrtv]|\\[0-7]{1,3})*\"
 
 %%
 
@@ -24,38 +26,55 @@ string              \"([^"]|\\\")*\"
 {line_comment}
 {block_comment}
 
-"if"    RET(IF)
-"else"  RET(ELSE)
-"while" RET(WHILE)
-"do"    RET(DO)
-"int"   RET(INT)
-"char"  RET(CHAR)
+"if"        RET(IF)
+"else"      RET(ELSE)
+"else if"   RET(ELIF)
+"while"     RET(WHILE)
+"return"    RET(RETURN)
+"break"     RET(BREAK)
+"continue"  RET(CONTINUE)
+"fn"        RET(FN)
+"as"        RET(AS)
+"let"       RET(LET)
 
-"+"     RET(ADD)
-"-"     RET(SUB)
-"*"     RET(MUL)
-"/"     RET(DIV)
-"="     RET(ASSIGN)
+"int"       RET(INT_T)
+"char"      RET(CHAR_T)
+"float"     RET(FLOAT_T)
+"string"    RET(STRING_T)
+"bool"      RET(BOOL_T)
+"void"      RET(VOID_T)
+
 "=="    RET(EQ)
 "!="    RET(NEQ)
-">"     RET(GT)
-"<"     RET(LT)
 ">="    RET(GEQ)
 "<="    RET(LEQ)
-
-"\n"    RET(EOL)
+"->"    RET(RARROW)
 ";"     RET(EOL)
-","     RET(COMMA)
-"{"     RET(LBRACE)
-"}"     RET(RBRACE)
-"("     RET(LPAREN)
-")"     RET(RPAREN)
-"["     RET(LBRACKET)
-"]"     RET(RBRACKET)
+
+"!" |
+"+" |
+"-" |
+"*" |
+"/" |
+"%" |
+"=" |
+">" |
+"<" |
+"," |
+"{" |
+"}" |
+"(" |
+")" |
+"[" |
+"]" |
+"&" |
+":"     RET(yytext[0])
 
 {id}        RET(ID)
-{number}    {yylval = atoi(yytext); RET(NUM);}
-{string}    RET(STR)
-.           {printf("Error line %d unknow '%s'\n", yylineno, yytext);}
+{intger}    {yylval = atoi(yytext); RET(INT);}
+{float}     {yylval = atof(yytext); RET(FLOAT);}
+{char}      RET(CHAR)
+{string}    RET(STRING)
+.           {printf("lex error: line %d unknow '%s'\n", yylineno, yytext);}
 
 %%
