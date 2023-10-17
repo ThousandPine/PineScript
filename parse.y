@@ -5,33 +5,124 @@ int yylex();
 int yyerror(char *);
 %}
 
-%token IF ELSE WHILE DO INT CHAR
-%token ADD SUB MUL DIV ASSIGN EQ NEQ GT LT GEQ LEQ
-%token EOL COMMA LBRACE RBRACE LPAREN RPAREN LBRACKET RBRACKET
-%token ID NUM STR
+%token IF ELSE ELIF WHILE BREAK CONTINUE RETURN FN AS LET
+%token INT_T CHAR_T FLOAT_T STRING_T BOOL_T VOID_T
+%token EQ NEQ GEQ LEQ RARROW EOL
+%token ID INT FLOAT CHAR STRING
 
-%left COMMA
-%left ADD SUB
-%left MUL DIV
-%left LPAREN RPAREN
+%left ','
+%left '='
+%left EQ NEQ
+%left '>' '<' GEQ LEQ
+%left '+' '-'
+%left '*' '/' '%'
+%left AS
+%left '!'
 
 %%
 
-    statement: statement expr EOL {printf("res:%d\n", $2);}
-            | statement EOL
-            | statement block
-            | /* Epsilon */
+    /*  */
+    global_statements: /* e */
+                    | global_statement global_statements
 
-    block: LBRACE statement RBRACE  {printf("block\n");}
+    global_statement: EOL
+                    | fn_def
+                    | var_def
 
-    expr: NUM       {$$ = $1;}        
-        | SUB expr  {$$ = -$2;}
-        | ADD expr  {$$ = -$2;}
-        | expr COMMA expr {$$ = $3;}
-        | expr ADD expr {$$ = $1 + $3;}
-        | expr SUB expr {$$ = $1 - $3;}
-        | expr MUL expr {$$ = $1 * $3;}
-        | expr DIV expr {$$ = $1 / $3;}
-        | LPAREN expr RPAREN {$$ = $2;}
+    /* function */
+    fn_def: FN ID '(' fn_args ')' RARROW fn_type '{' fn_statements '}'
 
+    fn_args: /* e */
+           | fn_arg_list
+
+    fn_arg_list: fn_arg
+               | fn_arg ',' fn_arg_list
+
+    fn_arg: ID ':' type
+          | '&' ID ':' type
+
+    fn_type: type
+           | VOID_T
+    
+    fn_statements: /* e */
+                | fn_statement fn_statements
+                
+    fn_statement: EOL
+                | block
+                | expr EOL
+                | var_def
+                | if_else
+                | while_loop
+                | RETURN expr EOL
+                | RETURN EOL
+
+    /* block */
+    block: '{' fn_statements '}'
+
+    /* var */
+    var_def: LET ID '=' expr EOL
+           | LET ID ':' type EOL
+           | LET ID ':' type '=' expr EOL
+           | LET '&' ID '=' ID EOL
+           | LET '&' ID ':' type '=' ID EOL
+
+    /* if-else */
+    if_else: IF '(' expr ')' '{' fn_statements '}' elif el
+
+    elif: /* e */
+         | ELIF '(' expr ')' '{' fn_statements '}' elif
+    
+    el: /* e */
+       | ELSE '{' fn_statements '}'
+
+    /* while */
+
+    while_loop: WHILE '(' expr ')' '{' while_statements '}'
+
+    while_statements: /* e */
+                    | while_statement while_statements 
+
+    while_statement: fn_statement
+                   | BREAK EOL
+                   | CONTINUE EOL
+
+    /* general */
+    type: INT_T | CHAR_T | FLOAT_T | STRING_T | BOOL_T
+
+    expr: ID
+        | INT
+        | FLOAT
+        | CHAR
+        | STRING
+        | fn_call
+        | val_trans
+        | '!' expr
+        | '(' expr ')'
+        | ID '=' expr
+        | expr '+' expr
+        | expr '-' expr
+        | expr '*' expr
+        | expr '/' expr
+        | expr '%' expr
+        | expr '>' expr
+        | expr '<' expr
+        | expr EQ expr
+        | expr GEQ expr
+        | expr LEQ expr
+
+    /*  */
+
+    fn_call: ID '(' fcall_args ')'
+
+    fcall_args: /* e */
+              | fcall_arg_list
+
+    fcall_arg_list: expr
+                  | expr ',' fcall_arg_list
+    
+    /*  */
+    val_trans: expr val_trans_list
+    
+    val_trans_list: AS type
+                  | AS type val_trans_list
 %%
