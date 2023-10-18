@@ -30,15 +30,15 @@ int yyerror(char *);
                     | var_def
 
     /* function */
-    fn_def: FN ID '(' fn_args ')' RARROW fn_type '{' fn_statements '}'
+    fn_def: FN ID '(' args_def ')' RARROW fn_type '{' fn_statements '}'
 
-    fn_args: /* e */
-           | fn_arg_list
+    args_def: /* e */
+           | arg_def_list
 
-    fn_arg_list: fn_arg
-               | fn_arg ',' fn_arg_list
+    arg_def_list: arg_def
+               | arg_def ',' arg_def_list
 
-    fn_arg: ID ':' type
+    arg_def: ID ':' type
           | '&' ID ':' type
 
     fn_type: type
