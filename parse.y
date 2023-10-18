@@ -108,6 +108,7 @@ int yyerror(char *);
         | expr GEQ expr
         | expr LEQ expr
         | expr EQ expr
+        | expr NEQ expr
         | ID '=' expr
 
     /*  */
