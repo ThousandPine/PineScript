@@ -19,6 +19,7 @@ intger              {digit}+
 float               {digit}+(\.{digit}*)?([eE][+-]?{digit}*)?
 char                \'([^'\\]|\\['"?\\abfnrtv]|\\[0-7]{1,3})\'
 string              \"([^"\\]|\\['"?\\abfnrtv]|\\[0-7]{1,3})*\"
+bool                true|false
 
 %%
 
@@ -75,6 +76,7 @@ string              \"([^"\\]|\\['"?\\abfnrtv]|\\[0-7]{1,3})*\"
 {float}     {yylval = atof(yytext); RET(FLOAT);}
 {char}      RET(CHAR)
 {string}    RET(STRING)
+{bool}      RET(BOOL)
 .           {printf("lex error: line %d unknow '%s'\n", yylineno, yytext);}
 
 %%

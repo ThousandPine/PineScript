@@ -8,7 +8,7 @@ int yyerror(const char *);
 %token IF ELSE ELIF WHILE BREAK CONTINUE RETURN FN AS LET
 %token INT_T CHAR_T FLOAT_T STRING_T BOOL_T VOID_T
 %token EQ NEQ GEQ LEQ RARROW EOL
-%token ID INT FLOAT CHAR STRING
+%token ID INT FLOAT CHAR STRING BOOL
 
 %left ','
 %left '='
@@ -100,6 +100,7 @@ int yyerror(const char *);
            | FLOAT
            | CHAR
            | STRING
+           | BOOL
 
     expr: '(' value ')'
         | '!' value
