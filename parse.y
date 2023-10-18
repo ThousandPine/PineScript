@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int yylex();
-int yyerror(char *);
+int yyerror(const char *);
 %}
 
 %token IF ELSE ELIF WHILE BREAK CONTINUE RETURN FN AS LET

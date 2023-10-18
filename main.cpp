@@ -9,17 +9,9 @@ extern char *yytext;
 extern FILE *yyin;
 extern int yyparse();
 
-void output(enum yytokentype type, const char *typename, const char *text)
+void output(const char *tname, const char *text)
 {
-    switch (type)
-    {
-    case ID:
-        fprintf(lex_out, "%s \t(%d, \"%s\")\n", typename, type, text);
-        break;
-    default:
-        fprintf(lex_out, "%s \t(%d, %s)\n", typename, type, text);
-        break;
-    }
+    fprintf(lex_out, "%s, %s\n", tname, text);
     fflush(lex_out);
 }
 
@@ -33,7 +25,7 @@ int main(int argc, char **argv)
     puts("\ndone");
 }
 
-int yyerror(char *s)
+int yyerror(const char *s)
 {
     printf("%s: line %d '%s'\n", s, yylineno, yytext);
     return 1;

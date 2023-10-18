@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include "y.tab.h"
 
-#define RET(x) {output(x, #x, yytext) ; return x;}
+#define RET(x) {output(#x, yytext) ; return x;}
 
-void output(enum yytokentype type, const char *typename, const char *text);
+void output(const char *tname, const char *text);
 %}
 
 %option noyywrap yylineno

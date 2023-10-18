@@ -1,7 +1,7 @@
 TAR=parser.bin
-CC=gcc
+CC=g++
 CFLAGS=-W
-SRC=$(wildcard ./*.c)
+SRC=$(wildcard ./*.c ./*.cpp)
 DEPS=$(wildcard ./*.h)
 GEN_SRC=lex.yy.c y.tab.c
 GEN_DEPS=y.tab.h
