@@ -73,12 +73,12 @@ bool                true|false
 "&" |
 ":"     RET(yytext[0])
 
+{bool}      TOKEN(BOOL)
 {id}        TOKEN(ID)
 {intger}    TOKEN(INT)
 {float}     TOKEN(FLOAT)
 {char}      TOKEN(CHAR)
 {string}    TOKEN(STRING)
-{bool}      TOKEN(BOOL)
 .           {printf("lex error: line %d unknow '%s'\n", yylineno, yytext);}
 
 %%
