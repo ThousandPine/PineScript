@@ -3,6 +3,8 @@
 #include "y.tab.h"
 
 #define RET(x) {output(#x, yytext) ; return x;}
+#define TOKEN(x) {output(#x, yytext) ; return yy::parser::token::x;}
+#define YY_DECL int yylex(yy::parser::value_type *value)
 
 void output(const char *tname, const char *text);
 %}
@@ -27,30 +29,30 @@ bool                true|false
 {line_comment}
 {block_comment}
 
-"if"        RET(IF)
-"else"      RET(ELSE)
-"else if"   RET(ELIF)
-"while"     RET(WHILE)
-"return"    RET(RETURN)
-"break"     RET(BREAK)
-"continue"  RET(CONTINUE)
-"fn"        RET(FN)
-"as"        RET(AS)
-"let"       RET(LET)
+"if"        TOKEN(IF)
+"else"      TOKEN(ELSE)
+"else if"   TOKEN(ELIF)
+"while"     TOKEN(WHILE)
+"return"    TOKEN(RETURN)
+"break"     TOKEN(BREAK)
+"continue"  TOKEN(CONTINUE)
+"fn"        TOKEN(FN)
+"as"        TOKEN(AS)
+"let"       TOKEN(LET)
 
-"int"       RET(INT_T)
-"char"      RET(CHAR_T)
-"float"     RET(FLOAT_T)
-"string"    RET(STRING_T)
-"bool"      RET(BOOL_T)
-"void"      RET(VOID_T)
+"int"       TOKEN(INT_T)
+"char"      TOKEN(CHAR_T)
+"float"     TOKEN(FLOAT_T)
+"string"    TOKEN(STRING_T)
+"bool"      TOKEN(BOOL_T)
+"void"      TOKEN(VOID_T)
 
-"=="    RET(EQ)
-"!="    RET(NEQ)
-">="    RET(GEQ)
-"<="    RET(LEQ)
-"->"    RET(RARROW)
-";"     RET(EOL)
+"=="    TOKEN(EQ)
+"!="    TOKEN(NEQ)
+">="    TOKEN(GEQ)
+"<="    TOKEN(LEQ)
+"->"    TOKEN(RARROW)
+";"     TOKEN(EOL)
 
 "!" |
 "+" |
@@ -71,12 +73,12 @@ bool                true|false
 "&" |
 ":"     RET(yytext[0])
 
-{id}        RET(ID)
-{intger}    {yylval = atoi(yytext); RET(INT);}
-{float}     {yylval = atof(yytext); RET(FLOAT);}
-{char}      RET(CHAR)
-{string}    RET(STRING)
-{bool}      RET(BOOL)
+{id}        TOKEN(ID)
+{intger}    TOKEN(INT)
+{float}     TOKEN(FLOAT)
+{char}      TOKEN(CHAR)
+{string}    TOKEN(STRING)
+{bool}      TOKEN(BOOL)
 .           {printf("lex error: line %d unknow '%s'\n", yylineno, yytext);}
 
 %%

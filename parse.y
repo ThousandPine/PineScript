@@ -1,9 +1,11 @@
-%{
-#include <stdio.h>
+%code
+{
+    extern char *yytext;
+    int yylex(yy::parser::value_type *value);
+}
 
-int yylex();
-int yyerror(const char *);
-%}
+%require "3.2"
+%language "c++"
 
 %token IF ELSE ELIF WHILE BREAK CONTINUE RETURN FN AS LET
 %token INT_T CHAR_T FLOAT_T STRING_T BOOL_T VOID_T
