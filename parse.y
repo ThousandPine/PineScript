@@ -51,35 +51,35 @@
                 
     fn_statement: EOL
                 | block
-                | value EOL
+                | expr EOL
                 | var_def
                 | if_else
                 | while_loop
-                | RETURN value EOL
+                | RETURN expr EOL
                 | RETURN EOL
 
     /* block */
     block: '{' fn_statements '}'
 
     /* var */
-    var_def: LET ID '=' value EOL
+    var_def: LET ID '=' expr EOL
            | LET ID ':' type EOL
-           | LET ID ':' type '=' value EOL
-           | LET '&' ID '=' l_value EOL
-           | LET '&' ID ':' type '=' l_value EOL
+           | LET ID ':' type '=' expr EOL
+           | LET '&' ID '=' ID EOL
+           | LET '&' ID ':' type '=' ID EOL
 
     /* if-else */
-    if_else: IF '(' value ')' '{' fn_statements '}' elif el
+    if_else: IF '(' expr ')' '{' fn_statements '}' elif el
 
     elif: /* e */
-         | ELIF '(' value ')' '{' fn_statements '}' elif
+         | ELIF '(' expr ')' '{' fn_statements '}' elif
     
     el: /* e */
        | ELSE '{' fn_statements '}'
 
     /* while */
 
-    while_loop: WHILE '(' value ')' '{' while_statements '}'
+    while_loop: WHILE '(' expr ')' '{' while_statements '}'
 
     while_statements: /* e */
                     | while_statement while_statements 
@@ -91,34 +91,28 @@
     /* general */
     type: INT_T | CHAR_T | FLOAT_T | STRING_T | BOOL_T
 
-    value: l_value
-         | r_value
-
-    l_value: ID
-
-    r_value: expr 
-           | fn_call
-           | INT
-           | FLOAT
-           | CHAR
-           | STRING
-           | BOOL
-
-    expr: '(' value ')'
-        | '!' value
-        | value AS type
-        | value '*' value
-        | value '/' value
-        | value '%' value
-        | value '+' value
-        | value '-' value
-        | value '>' value
-        | value '<' value
-        | value GEQ value
-        | value LEQ value
-        | value EQ value
-        | value NEQ value
-        | l_value '=' value
+    expr: ID
+        | INT
+        | FLOAT
+        | CHAR
+        | STRING
+        | BOOL
+        | fn_call
+        | '(' expr ')'
+        | '!' expr
+        | expr AS type
+        | expr '*' expr
+        | expr '/' expr
+        | expr '%' expr
+        | expr '+' expr
+        | expr '-' expr
+        | expr '>' expr
+        | expr '<' expr
+        | expr GEQ expr
+        | expr LEQ expr
+        | expr EQ expr
+        | expr NEQ expr
+        | ID '=' expr
 
     /*  */
 
@@ -127,6 +121,6 @@
     fcall_args: /* e */
               | fcall_arg_list
 
-    fcall_arg_list: value
-                  | value ',' fcall_arg_list
+    fcall_arg_list: expr
+                  | expr ',' fcall_arg_list
 %%
