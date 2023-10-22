@@ -1,8 +1,9 @@
-lex.yy.c
+lex.yy.cpp
 y.tab.cpp
 y.tab.h
 pine
 
+*.o
 *.output
 *.bin
 *.txt

@@ -1,19 +1,24 @@
 TAR=pine
 CC=g++
 CFLAGS=-W -g
-SRC=$(wildcard ./*.c ./*.cpp ./*/*.cpp)
+SRC=$(wildcard ./*.cpp ./*/*.cpp)
 DEPS=$(wildcard ./*.h ./*/*.h)
-GEN_SRC=lex.yy.c y.tab.cpp
+GEN_SRC=lex.yy.cpp y.tab.cpp
 GEN_DEPS=y.tab.h
+OBJ=$(patsubst %.cpp, %.o, $(SRC))
+GEN_OBJ=$(patsubst %.cpp, %.o, $(GEN_SRC))
 
-lex.yy.c: lex.l
-	flex lex.l
+lex.yy.cpp: lex.l
+	flex -o lex.yy.cpp lex.l
 
 y.tab.cpp y.tab.h: parse.y
 	bison parse.y -dv -Wcounterexamples -o y.tab.cpp --header=y.tab.h
 
-$(TAR): $(SRC) $(DEPS) $(GEN_SRC) $(GEN_DEPS)
-	$(CC) $(CFLAGS) $(SRC) -o $(TAR)
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@ 
+
+$(TAR): $(DEPS) $(GEN_DEPS) $(OBJ) $(GEN_OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(TAR)
 
 all: $(TAR)
 
@@ -21,7 +26,7 @@ run: all
 	./$(TAR)
 
 clean:
-	rm -rf *.bin $(GEN_SRC) $(GEN_DEPS)
+	rm -rf $(TAR) $(GEN_SRC) $(GEN_DEPS) $(OBJ)
 
 rebuild: clean all
 
