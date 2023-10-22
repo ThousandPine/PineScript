@@ -1,56 +1,66 @@
-# RL Language
+# Pine Script
 
-## 基本类型
+## 简介
 
-### int
+Pine Script是一个基于解释器运行的脚本语言，其语法参考自Rust，JavaScript，C++等语言
 
-运算类型：四则，比较，取模
+使用类型标注和运行时类型检查，支持左值引用和函数递归调用，暂不支持数组、指针和自定义数据类型
 
-运算对象: int
+## 构建&运行方式
 
-类型转换: float, bool, char
 
-### float
 
-运算类型：四则，比较
+## 代码样例
 
-运算对象: float
 
-类型转换: int
 
-### char
+## 数据类型
 
-运算类型：四则，比较
+### 类型说明
 
-运算对象: char
+| 数据类型 | 数据范围 |
+| -------- | -------- |
+| int      |          |
+| float    |          |
+| char     |          |
+| string   |          |
+| bool     |          |
+| void     |          |
 
-类型转换: int, string
+### 运算符表
 
-### string
+运算符优先级从左到右下降
 
-运算类型：加法，比较
+每种数据类型都只能和相同类型进行运算，和其他类型进行运算则需要使用类型转换语法
 
-运算对象：string
+| 数据类型\运算符 | !    | as   | *    | /    | %    | +    | -    | >    | <    | >=   | <=   | ==   | !=   | =    |
+| --------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| int             |      | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    |
+| float           |      | ✔    | ✔    | ✔    |      | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    |
+| char            |      | ✔    |      |      |      |      |      | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    | ✔    |
+| string          |      | ✔    |      |      |      | ✔    |      |      |      |      |      | ✔    | ✔    | ✔    |
+| bool            | ✔    | ✔    |      |      |      |      |      |      |      |      |      | ✔    | ✔    | ✔    |
+| void            |      |      |      |      |      |      |      |      |      |      |      |      |      |      |
 
-类型转换：无
+### 类型转换表
 
-### bool
+| 源类型\目标类型 | int  | float | char | string | bool | void |
+| --------------- | ---- | ----- | ---- | ------ | ---- | ---- |
+| int             | ✔    | ✔     | ✔    | ✔      | ✔    |      |
+| float           | ✔    | ✔     | ✔    | ✔      | ✔    |      |
+| char            | ✔    | ✔     | ✔    | ✔      | ✔    |      |
+| string          |      |       |      | ✔      |      |      |
+| bool            | ✔    | ✔     | ✔    | ✔      | ✔    |      |
+| void            |      |       |      |        |      |      |
 
-运算类型：比较，取反
 
-运算对象：bool
-
-类型转换：int
-
-### void
-
-运算类型：无
-
-运算对象：无
-
-类型转换：无
 
 ## 语法
+
+### 基本内容
+
+- 每个语句以分号为结束符
+- 函数需要在使用前定义（暂不支持函数声明）
 
 ### 作用域
 
@@ -72,13 +82,13 @@ let NAME = VALUE;
 
 基本语法形式参考Rust和JS，每行let语句只能定义一个变量
 
-支持Shadowing，同作用域内可重复定义
+支持Shadowing，同作用域内可重复定义刷新
 
 ### 左值引用
 
 ```
-let &NAME: TYPE = VAR;
-let &NAME = VAR;
+let &NAME: TYPE = variable;
+let &NAME = variable;
 ```
 
 语法与定义变量基本相同，主要是在let和NAME之间加了个&符号，并且等号右侧必须为变量
@@ -100,41 +110,35 @@ VALUE as TYPE
 VALUE as TYPE_1 as TYPE_2 ...
 ```
 
-### 基本运算
-
-四则运算，取非，取模，比较，括号，赋值
-
-### 控制流
+### 控制流语句（待实现）
 
 #### if-else
 
 ```
-if (VALUE) {
+if (condition) {
 	STATEMENTS
-} else if (VALUE) {
+} else if (condition) {
 	STATEMENTS
-} else if (VALUE) {
+} else if (condition) {
 	STATEMENTS
 } else {
 	STATEMENTS
 }
 ```
 
-VALUE为bool类型，if后可跟随任意多个else if，并且else if和else可省略
-
 #### while
 
 ```
-while (VALUE) {
+while (condition) {
 	STATEMENTS
 }
 ```
 
-VALUE为bool类型
+condition为bool类型表达式
 
-### 数组
+### 输入&输出（待实现）
 
-### 输入&输出
+
 
 
 
