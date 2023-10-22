@@ -74,7 +74,7 @@ bool                true|false
 ":"     RET(yytext[0])
 
 {bool}      TOKEN(BOOL)
-{id}        TOKEN(ID)
+{id}        {strcpy(value->s, yytext); TOKEN(ID)}
 {intger}    TOKEN(INT)
 {float}     TOKEN(FLOAT)
 {char}      TOKEN(CHAR)

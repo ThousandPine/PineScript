@@ -13,7 +13,7 @@ extern int yyparse();
 void output(const char *tname, const char *text)
 {
     fprintf(lex_out, "%s, %s\n", tname, text);
-    fflush(lex_out);
+    // fflush(lex_out);
 }
 
 int main(int argc, char **argv)
@@ -25,6 +25,10 @@ int main(int argc, char **argv)
     parser.parse();
 
     fclose(lex_out);
+
+    fncall_expression main_fn("main", nullptr);
+    main_fn.get_value();
+
     puts("\ndone");
 }
 

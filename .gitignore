@@ -1,6 +1,7 @@
 lex.yy.c
 y.tab.cpp
 y.tab.h
+pine
 
 *.output
 *.bin

@@ -1,8 +1,8 @@
-TAR=parser.bin
+TAR=pine
 CC=g++
-CFLAGS=-W
-SRC=$(wildcard ./*.c ./*.cpp)
-DEPS=$(wildcard ./*.h)
+CFLAGS=-W -g
+SRC=$(wildcard ./*.c ./*.cpp ./*/*.cpp)
+DEPS=$(wildcard ./*.h ./*/*.h)
 GEN_SRC=lex.yy.c y.tab.cpp
 GEN_DEPS=y.tab.h
 
