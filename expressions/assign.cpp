@@ -1,21 +1,16 @@
 #include "assign.h"
 #include "../symtable.h"
 
-assign_expression::assign_expression(const std::string &id, const gc_ptr<expression> &expr) : _id(id), _expr(expr) {}
+assign_expression::assign_expression(const gc_ptr<expression> &expr1, const gc_ptr<expression> &expr2) : _expr1(expr1), _expr2(expr2) {}
 
 gc_ptr<value> assign_expression::get_value() const
 {
-    auto var = symtable::instance().get_var(this->_id);
-    if (var == nullptr)
+    auto ref = this->_expr1->get_ref();
+    if (ref == nullptr)
     {
         return nullptr;
     }
+    auto val = this->_expr2->get_value();
 
-    auto val = _expr->get_value();
-    if (val == nullptr)
-    {
-        return nullptr;
-    }
-
-    return var->assign(_expr->get_value()) ? var->get_value() : nullptr;
+    return (*ref) = (*val);
 }

@@ -5,10 +5,9 @@
 class assign_expression : public expression
 {
 protected:
-    const std::string _id;
-    const gc_ptr<expression> _expr;
+    const gc_ptr<expression> _expr1, _expr2;
 
 public:
-    assign_expression(const std::string &id, const gc_ptr<expression> &expr);
+    assign_expression(const gc_ptr<expression> &expr1, const gc_ptr<expression> &expr2);
     virtual gc_ptr<value> get_value() const override;
 };

@@ -154,7 +154,7 @@
         | expr LEQ expr     {$$ = new leq_expression($1, $3);}
         | expr EQ expr      {$$ = new eq_expression($1, $3);}
         | expr NEQ expr     {$$ = new neq_expression($1, $3);}
-        | ID '=' expr       {$$ = new assign_expression($1, $3);}
+        | expr '=' expr     {$$ = new assign_expression($1, $3);}
 
     /*  */
 
