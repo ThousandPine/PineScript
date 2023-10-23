@@ -1,23 +1,25 @@
 TAR=pine
 CC=g++
 CFLAGS=-W -g
+FLEX=lex.yy.cpp
+BISON=y.tab.cpp y.tab.h
 SRC=$(wildcard ./*.cpp ./*/*.cpp)
-DEPS=$(wildcard ./*.h ./*/*.h)
-GEN_SRC=lex.yy.cpp y.tab.cpp
-GEN_DEPS=y.tab.h
-OBJ=$(patsubst %.cpp, %.o, $(SRC))
-GEN_OBJ=$(patsubst %.cpp, %.o, $(GEN_SRC))
+DEPS=$(SRC:.cpp=.d)
+OBJ=$(SRC:.cpp=.o)
+GEN_OBJ=$(BISON:.cpp=.o) $(FLEX:.cpp=.o)
 
-lex.yy.cpp: lex.l
+-include $(DEPS)
+
+$(FLEX): lex.l
 	flex -o lex.yy.cpp lex.l
 
-y.tab.cpp y.tab.h: parse.y
+$(BISON): parse.y
 	bison parse.y -dv -Wcounterexamples -o y.tab.cpp --header=y.tab.h
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -c $< -o $@ -MMD -MF $*.d -MP 
 
-$(TAR): $(DEPS) $(GEN_DEPS) $(OBJ) $(GEN_OBJ)
+$(TAR): $(FLEX) $(BISON) $(OBJ) $(GEN_OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TAR)
 
 all: $(TAR)
@@ -26,7 +28,7 @@ run: all
 	./$(TAR)
 
 clean:
-	rm -rf $(TAR) $(GEN_SRC) $(GEN_DEPS) $(OBJ)
+	rm -rf $(TAR) $(BISON_HEAD) $(BISON) $(FLEX) $(OBJ) $(DEPS)
 
 rebuild: clean all
 

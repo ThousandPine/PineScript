@@ -4,6 +4,7 @@ y.tab.h
 pine
 
 *.o
+*.d
 *.output
 *.bin
 *.txt
