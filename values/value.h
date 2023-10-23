@@ -36,6 +36,7 @@ public:
     virtual std::string to_string() const = 0;
     virtual const std::string &type_name() const;
 
+    virtual gc_ptr<value> operator-() const;
     virtual gc_ptr<value> operator!() const;
     virtual gc_ptr<value> convert(int type) const;
     virtual gc_ptr<value> operator*(const value &val) const;

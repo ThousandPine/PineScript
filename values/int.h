@@ -16,6 +16,7 @@ public:
     virtual gc_ptr<value> copy() const override;
     virtual std::string to_string() const override;
 
+    virtual gc_ptr<value> operator-() const override;
     virtual gc_ptr<value> convert(int type) const override;
     virtual gc_ptr<value> operator*(const value &val) const override;
     virtual gc_ptr<value> operator/(const value &val) const override;

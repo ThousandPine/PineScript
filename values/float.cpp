@@ -45,6 +45,11 @@ gc_ptr<value> float_value::convert(int type) const
     return val;
 }
 
+gc_ptr<value> float_value::operator-() const
+{
+    return new float_value(-this->_val);
+}
+
 VALUE_IO_TEMPLATE(float_value)
 
 VALUE_OP_TEMPLATE_C(float_value, *, float_value)

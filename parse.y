@@ -30,6 +30,7 @@
 %left '*' '/' '%'
 %left AS
 %right '!'
+%right UMINUS
 
 %union
 {
@@ -139,6 +140,7 @@
         | BOOL      {$$ = new literal(new bool_value(yytext));}
         | fn_call           {$$ = $1;}
         | '(' expr ')'      {$$ = $2;}
+        | '-' expr %prec UMINUS {$$ = new minus_expression($2);}
         | '!' expr          {$$ = new not_expression($2);}
         | expr AS type      {$$ = new convert_expression($1, $3);}
         | expr '*' expr     {$$ = new mul_expression($1, $3);}

@@ -76,6 +76,11 @@ gc_ptr<value> value::operator!() const
     state::error((std::string) "Type " + this->type_name() + " does not support " + '!' + " operations");
     return nullptr;
 }
+gc_ptr<value> value::operator-() const
+{
+    state::error((std::string) "Type " + this->type_name() + " does not support " + "-(minus)" + " operations");
+    return nullptr;
+}
 gc_ptr<value> value::operator=(const value &val)
 {
     state::error((std::string) "Type " +
