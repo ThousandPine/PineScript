@@ -4,6 +4,7 @@
 #include "convert.h"
 #include "fn_call.h"
 #include "id.h"
+#include "literal.h"
 #include "minus.h"
 #include "not.h"
 #include "others.h"
