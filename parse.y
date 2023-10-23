@@ -15,7 +15,7 @@
 %require "3.2"
 %language "c++"
 
-%token IF ELSE ELIF WHILE BREAK CONTINUE RETURN FN AS LET
+%token IF ELSE ELIF WHILE BREAK CONTINUE RETURN FN AS LET INPUT OUTPUT
 %token INT_T CHAR_T FLOAT_T STRING_T BOOL_T VOID_T
 %token EQ NEQ GEQ LEQ RARROW EOL
 %token INT FLOAT CHAR STRING BOOL
@@ -43,9 +43,9 @@
 
 %type <i> fn_type type
 %type <expr> expr fn_call
-%type <expr_l> fcall_args fcall_arg_list fcall_arg
+%type <expr_l> expr_list expr_node
 %type <args> args_def arg_def_list arg_def
-%type <stmt> fn_statements fn_statement block var_def
+%type <stmt> fn_statements fn_statement block var_def input output
 
 %%
 
@@ -84,6 +84,8 @@
                 | var_def           {$$ = $1;}
                 // | if_else
                 // | while_loop
+                | input             {$$ = $1;}
+                | output            {$$ = $1;}
                 | RETURN expr EOL   {$$ = new return_statement($expr, yylineno);}
                 | RETURN EOL        {$$ = new return_statement(nullptr, yylineno);}
 
@@ -117,6 +119,11 @@
     //                | BREAK EOL
     //                | CONTINUE EOL
 
+    /* IO */
+    input: INPUT '`' expr_list '`' EOL      {$$ = new input_statement($expr_list, yylineno);}
+
+    output: OUTPUT '`' expr_list '`' EOL    {$$ = new output_statement($expr_list, yylineno);}
+
     /* general */
     type: INT_T     {$$ = value_t::INT_T;}
         | FLOAT_T   {$$ = value_t::FLOAT_T;}
@@ -149,13 +156,11 @@
 
     /*  */
 
-    fn_call: ID '(' fcall_args ')'          {$$ = new fncall_expression($ID, $fcall_args);}
+    fn_call: ID '(' expr_list ')'     {$$ = new fncall_expression($ID, $expr_list);}
 
-    fcall_args: /* e */                     {$$ = nullptr;}
-              | fcall_arg_list              {$$ = $1;}
+    expr_list: /* e */                {$$ = nullptr;}
+             | expr_node              {$$ = $1;}
 
-    fcall_arg_list: fcall_arg                    {$$ = $1;}
-                  | fcall_arg ',' fcall_arg_list {$$ = $1; $1->next = $3;}
-
-    fcall_arg : expr                        {$$ = new expr_list($expr);}
+    expr_node: expr                   {$$ = new expr_list($1);}
+             | expr ',' expr_node     {$$ = new expr_list($1); $$->next = $3;}
 %%

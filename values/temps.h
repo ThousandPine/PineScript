@@ -2,6 +2,16 @@
 
 #define CONVERT_ERROR() state::error((std::string) "cannot convert '" + this->type_name() + "' to '" + value::type_to_name(type) + "'")
 
+#define VALUE_IO_TEMPLATE(value_type) \
+    void value_type::input()          \
+    {                                 \
+        std::cin >> this->_val;       \
+    }                                 \
+    void value_type::output() const   \
+    {                                 \
+        std::cout << this->_val;      \
+    }
+
 #define VALUE_OP_TEMPLATE_BODY(value_type, op, return_type)                                                                 \
     {                                                                                                                       \
         if (val.type != this->type)                                                                                         \

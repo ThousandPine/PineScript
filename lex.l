@@ -39,6 +39,8 @@ bool                true|false
 "fn"        TOKEN(FN)
 "as"        TOKEN(AS)
 "let"       TOKEN(LET)
+"input"     TOKEN(INPUT)
+"output"    TOKEN(OUTPUT)
 
 "int"       TOKEN(INT_T)
 "char"      TOKEN(CHAR_T)
@@ -71,7 +73,8 @@ bool                true|false
 "[" |
 "]" |
 "&" |
-":"     RET(yytext[0])
+":" |
+"`"     RET(yytext[0])
 
 {bool}      TOKEN(BOOL)
 {id}        {strcpy(value->s, yytext); TOKEN(ID)}

@@ -29,9 +29,11 @@ public:
 
     value(int type);
 
-    virtual const std::string &type_name() const;
-    virtual std::string to_string() const = 0;
+    virtual void input() = 0;
+    virtual void output() const = 0;
     virtual gc_ptr<value> copy() const = 0;
+    virtual std::string to_string() const = 0;
+    virtual const std::string &type_name() const;
 
     virtual gc_ptr<value> operator!() const;
     virtual gc_ptr<value> convert(int type) const;

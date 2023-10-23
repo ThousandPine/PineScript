@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "values.h"
 #include "temps.h"
 #include "../state.h"
@@ -42,6 +44,8 @@ gc_ptr<value> float_value::convert(int type) const
     }
     return val;
 }
+
+VALUE_IO_TEMPLATE(float_value)
 
 VALUE_OP_TEMPLATE_C(float_value, *, float_value)
 VALUE_OP_TEMPLATE_C(float_value, /, float_value)

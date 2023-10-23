@@ -86,3 +86,25 @@ private:
 public:
     return_statement(const gc_ptr<expression> &expr, int end_lineno);
 };
+
+class input_statement : public statement
+{
+private:
+    const gc_ptr<expr_list> _exprs;
+
+    virtual int run() const override;
+
+public:
+    input_statement(const gc_ptr<expr_list> &exprs, int end_lineno);
+};
+
+class output_statement : public statement
+{
+private:
+    const gc_ptr<expr_list> _exprs;
+
+    virtual int run() const override;
+
+public:
+    output_statement(const gc_ptr<expr_list> &exprs, int end_lineno);
+};

@@ -7,8 +7,10 @@ class void_value : public value
 public:
     void_value();
 
-    virtual std::string to_string() const override;
+    virtual void input() override;
+    virtual void output() const override;
     virtual gc_ptr<value> copy() const override;
+    virtual std::string to_string() const override;
 };
 
 class int_value : public value
@@ -20,8 +22,10 @@ public:
     int_value(int val);
     int_value(const char *s);
 
-    virtual std::string to_string() const override;
+    virtual void input() override;
+    virtual void output() const override;
     virtual gc_ptr<value> copy() const override;
+    virtual std::string to_string() const override;
 
     virtual gc_ptr<value> convert(int type) const override;
     virtual gc_ptr<value> operator*(const value &val) const override;
@@ -47,8 +51,10 @@ public:
     float_value(float val);
     float_value(const char *s);
 
-    virtual std::string to_string() const override;
+    virtual void input() override;
+    virtual void output() const override;
     virtual gc_ptr<value> copy() const override;
+    virtual std::string to_string() const override;
 
     virtual gc_ptr<value> convert(int type) const override;
     virtual gc_ptr<value> operator*(const value &val) const override;
@@ -73,8 +79,10 @@ public:
     bool_value(bool val);
     bool_value(const char *s);
 
-    virtual std::string to_string() const override;
+    virtual void input() override;
+    virtual void output() const override;
     virtual gc_ptr<value> copy() const override;
+    virtual std::string to_string() const override;
 
     virtual gc_ptr<value> operator!() const override;
     virtual gc_ptr<value> convert(int type) const override;

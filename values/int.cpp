@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "values.h"
 #include "temps.h"
 #include "../state.h"
@@ -42,6 +44,8 @@ gc_ptr<value> int_value::convert(int type) const
     }
     return val;
 }
+
+VALUE_IO_TEMPLATE(int_value)
 
 VALUE_OP_TEMPLATE_C(int_value, *, int_value)
 VALUE_OP_TEMPLATE_C(int_value, /, int_value)
