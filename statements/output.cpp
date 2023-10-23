@@ -1,12 +1,12 @@
 #include "output.h"
 
-output_statement::output_statement(const gc_ptr<expr_list> &exprs, int end_lineno)
+output_statement::output_statement(const gc_ptr<expr_list> &expr_list, int end_lineno)
     : statement("input", end_lineno),
-      _exprs(exprs) {}
+      _expr_list(expr_list) {}
 
 int output_statement::run() const
 {
-    for (auto p = _exprs; p !=nullptr; p = p->next)
+    for (auto p = _expr_list; p !=nullptr; p = p->next)
     {
         auto val = p->expr->get_value();
         if (val == nullptr)

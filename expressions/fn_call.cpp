@@ -3,7 +3,7 @@
 #include "../values/void.h"
 #include "../state.h"
 
-fncall_expression::fncall_expression(const std::string &id, const gc_ptr<expr_list> &args) : _id(id), _exprs(args) {}
+fncall_expression::fncall_expression(const std::string &id, const gc_ptr<expr_list> &args) : _id(id), _expr_list(args) {}
 
 gc_ptr<value> fncall_expression::get_value() const
 {
@@ -39,12 +39,12 @@ gc_ptr<function> fncall_expression::_fn_init() const
 
     /* 传入参数 */
     auto arg = fn->args;
-    auto e_list = _exprs;
+    auto expr_node = _expr_list;
 
-    for (; arg != nullptr && e_list != nullptr; arg = arg->next, e_list = e_list->next)
+    for (; arg != nullptr && expr_node != nullptr; arg = arg->next, expr_node = expr_node->next)
     {
         /* 创建参数变量 */
-        auto val = arg->is_ref ? e_list->expr->get_ref() : e_list->expr->get_value();
+        auto val = arg->is_ref ? expr_node->expr->get_ref() : expr_node->expr->get_value();
         if (val == nullptr)
         {
             return nullptr;
@@ -57,12 +57,12 @@ gc_ptr<function> fncall_expression::_fn_init() const
         }
     }
 
-    if (arg != nullptr && e_list == nullptr)
+    if (arg != nullptr && expr_node == nullptr)
     {
         state::error("too few arguments in function \"" + fn->id + "\" call");
         return nullptr;
     }
-    if (arg == nullptr && e_list != nullptr)
+    if (arg == nullptr && expr_node != nullptr)
     {
         state::error("too many arguments in function \"" + fn->id + "\" call");
         return nullptr;

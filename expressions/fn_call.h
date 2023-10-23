@@ -7,7 +7,7 @@ class fncall_expression : public expression
 {
 private:
     const std::string _id;
-    const gc_ptr<expr_list> _exprs;
+    const gc_ptr<expr_list> _expr_list;
 
     gc_ptr<function> _fn_init() const;
     gc_ptr<value> _fn_run(gc_ptr<function> fn) const;

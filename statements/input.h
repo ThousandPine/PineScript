@@ -6,10 +6,10 @@
 class input_statement : public statement
 {
 private:
-    const gc_ptr<expr_list> _exprs;
+    const gc_ptr<expr_list> _expr_list;
 
     virtual int run() const override;
 
 public:
-    input_statement(const gc_ptr<expr_list> &exprs, int end_lineno);
+    input_statement(const gc_ptr<expr_list> &expr_list, int end_lineno);
 };

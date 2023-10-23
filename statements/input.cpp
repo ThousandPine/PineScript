@@ -1,12 +1,12 @@
 #include "input.h"
 
-input_statement::input_statement(const gc_ptr<expr_list> &exprs, int end_lineno)
+input_statement::input_statement(const gc_ptr<expr_list> &expr_list, int end_lineno)
     : statement("input", end_lineno),
-      _exprs(exprs) {}
+      _expr_list(expr_list) {}
 
 int input_statement::run() const
 {
-    for (auto p = _exprs; p !=nullptr; p = p->next)
+    for (auto p = _expr_list; p !=nullptr; p = p->next)
     {
         auto ref = p->expr->get_ref();
         if (ref == nullptr)
