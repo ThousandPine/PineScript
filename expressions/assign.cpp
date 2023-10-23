@@ -11,6 +11,10 @@ gc_ptr<value> assign_expression::get_value() const
         return nullptr;
     }
     auto val = this->_expr2->get_value();
+    if (val == nullptr)
+    {
+        return nullptr;
+    }
 
     return (*ref) = (*val);
 }

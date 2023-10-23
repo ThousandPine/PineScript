@@ -6,8 +6,12 @@
     gc_ptr<value> class ::get_value() const                                                                           \
     {                                                                                                                 \
         auto val1 = _expr1->get_value();                                                                              \
+        if (val1 == nullptr)                                                                                          \
+        {                                                                                                             \
+            return nullptr;                                                                                           \
+        }                                                                                                             \
         auto val2 = _expr2->get_value();                                                                              \
-        if (val1 == nullptr || val2 == nullptr)                                                                       \
+        if (val2 == nullptr)                                                                                          \
         {                                                                                                             \
             return nullptr;                                                                                           \
         }                                                                                                             \
