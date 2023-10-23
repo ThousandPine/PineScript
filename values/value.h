@@ -23,6 +23,7 @@ private:
     static std::unordered_map<int, std::string> _name;
 
 public:
+    static gc_ptr<value> create(int type);
     static const std::string &type_to_name(int type);
 
     const int type;

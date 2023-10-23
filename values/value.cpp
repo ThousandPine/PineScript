@@ -1,4 +1,5 @@
 #include "value.h"
+#include "values.h"
 #include "temps.h"
 #include "../state.h"
 
@@ -12,6 +13,27 @@ std::unordered_map<int, std::string> value::_name{{VOID_T, "void"},
 const std::string &value::type_to_name(int type)
 {
     return _name[type];
+}
+
+gc_ptr<value> value::create(int type)
+{
+    switch (type)
+    {
+    case INT_T:
+        return new int_value(0); 
+        break;
+    case FLOAT_T:
+        return new float_value(0.0); 
+        break;
+    case BOOL_T:
+        return new bool_value(false);
+        break;
+    
+    default:
+        state::error("value::create unknow type number " + std::to_string(type));
+        return nullptr;
+        break;
+    }
 }
 
 /* ================================================= */

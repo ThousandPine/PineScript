@@ -27,7 +27,7 @@ variable *variable::create(const std::string &id, int type, bool is_ref, const g
             state::error("untyped variable \"" + id + "\" requires an initializer");
             return nullptr;
         }
-        return new variable(id, nullptr, type, false);
+        return new variable(id, value::create(type), type, false);
     }
     if (type != VOID_T && val->type != type)
     {
@@ -36,6 +36,8 @@ variable *variable::create(const std::string &id, int type, bool is_ref, const g
     }
     return new variable(id, val->copy(), val->type, false);
 }
+
+/* ============================================== */
 
 variable::variable(const std::string &id, const gc_ptr<value> &val, int type, bool is_ref)
     : _val(val), id(id), type(type), is_ref(is_ref) {}
