@@ -23,13 +23,13 @@
 %token <s> ID
 
 %left ','
-%left '='
+%right '='
 %left EQ NEQ
 %left '>' '<' GEQ LEQ
 %left '+' '-'
 %left '*' '/' '%'
 %left AS
-%left '!'
+%right '!'
 
 %union
 {
