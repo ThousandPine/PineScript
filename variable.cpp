@@ -1,5 +1,5 @@
-#include "expression.h"
-#include "../state.h"
+#include "variable.h"
+#include "state.h"
 
 variable *variable::create(const std::string &id, int type, bool is_ref, const gc_ptr<value> &val)
 {
@@ -62,35 +62,4 @@ gc_ptr<value> variable::get_ref() const
     }
 
     return this->_val;
-}
-
-bool variable::assign(const gc_ptr<value> &val)
-{
-    if (val == nullptr)
-    {
-        return false;
-    }
-
-    /* 赋值 */
-    if (this->_val != nullptr)
-    {
-        if (this->_val->type != val->type)
-        {
-            state::error((std::string) "a value of type '" + val->type_name() + "' cannot be assigned to variable \"" + this->id + "\" of type '" + value::type_to_name(this->type) + "'");
-            return false;
-        }
-        *(this->_val) = *val;
-    }
-    /* 初始化 */
-    else
-    {
-        if (this->_val->type != val->type)
-        {
-            state::error("a variable \"" + this->id + "\" of type '" + value::type_to_name(this->type) + "' cannot be initialized with a value of type '" + val->type_name() + "'");
-            return false;
-        }
-        this->_val = val;
-    }
-
-    return true;
 }

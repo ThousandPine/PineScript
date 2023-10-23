@@ -7,7 +7,7 @@
 
 #include "function.h"
 #include "gc_ptr.h"
-#include "./values/value.h"
+#include "variable.h"
 
 class symtable
 {
