@@ -1,6 +1,5 @@
-#include "statements.h"
+#include "var_def.h"
 #include "../symtable.h"
-#include "../expressions/expression.h"
 
 vardef_statement::vardef_statement(const std::string &id, int type, const gc_ptr<expression> &expr, int end_lineno)
     : statement("define variable \"" + id + "\"", end_lineno),

@@ -1,4 +1,4 @@
-#include "statements.h"
+#include "output.h"
 
 output_statement::output_statement(const gc_ptr<expr_list> &exprs, int end_lineno)
     : statement("input", end_lineno),

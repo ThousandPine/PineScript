@@ -1,4 +1,4 @@
-#include "statements.h"
+#include "input.h"
 
 input_statement::input_statement(const gc_ptr<expr_list> &exprs, int end_lineno)
     : statement("input", end_lineno),

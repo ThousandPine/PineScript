@@ -1,4 +1,4 @@
-#include "statements.h"
+#include "blank.h"
 
 blank_statement::blank_statement() : statement("", -1) {}
 

@@ -1,4 +1,4 @@
-#include "statements.h"
+#include "fn_def.h"
 #include "../symtable.h"
 
 fndef_statement::fndef_statement(const gc_ptr<function> &fn) : statement("", -1) , _fn(fn) {}

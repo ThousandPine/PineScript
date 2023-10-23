@@ -1,6 +1,7 @@
-#include "statements.h"
+#include "return.h"
 #include "../state.h"
-#include "../values/values.h"
+#include "../function.h"
+#include "../values/void.h"
 
 return_statement::return_statement(const gc_ptr<expression> &expr, int end_lineno)
     : statement("return", end_lineno),
