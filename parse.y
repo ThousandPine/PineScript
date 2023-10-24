@@ -135,7 +135,7 @@
     expr: ID        {$$ = new id_expression($ID);}
         | INT       {$$ = new literal(new int_value(yytext));}
         | FLOAT     {$$ = new literal(new float_value(yytext));}
-        // | CHAR
+        | CHAR      {$$ = new literal(new char_value(yytext));}
         // | STRING
         | BOOL      {$$ = new literal(new bool_value(yytext));}
         | fn_call           {$$ = $1;}
