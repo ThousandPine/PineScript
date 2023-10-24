@@ -136,7 +136,7 @@
         | INT       {$$ = new literal(new int_value(yytext));}
         | FLOAT     {$$ = new literal(new float_value(yytext));}
         | CHAR      {$$ = new literal(new char_value(yytext));}
-        // | STRING
+        | STRING    {$$ = new literal(new string_value(yytext));}
         | BOOL      {$$ = new literal(new bool_value(yytext));}
         | fn_call           {$$ = $1;}
         | '(' expr ')'      {$$ = $2;}

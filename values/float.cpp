@@ -34,6 +34,10 @@ gc_ptr<value> float_value::convert(int type) const
         val = new int_value(this->_val);
         break;
 
+    case STRING_T:
+        val = new string_value(this->to_string());
+        break;
+
     default:
         CONVERT_ERROR();
         break;
