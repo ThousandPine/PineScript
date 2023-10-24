@@ -38,6 +38,10 @@ gc_ptr<value> int_value::convert(int type) const
         val = new bool_value(this->_val);
         break;
 
+    case CHAR_T:
+        val = new char_value(this->_val);
+        break;
+
     default:
         CONVERT_ERROR();
         break;

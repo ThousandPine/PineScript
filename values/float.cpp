@@ -34,10 +34,6 @@ gc_ptr<value> float_value::convert(int type) const
         val = new int_value(this->_val);
         break;
 
-    case BOOL_T:
-        val = new bool_value(this->_val);
-        break;
-
     default:
         CONVERT_ERROR();
         break;
