@@ -43,7 +43,7 @@
     expression *expr;
 }
 
-%type <i> fn_type type array_type
+%type <i> fn_type type
 %type <expr> expr fn_call
 %type <expr_l> expr_list expr_node
 %type <args> args_def arg_def_list arg_def
@@ -96,7 +96,6 @@
 
     /* var */
     var_def: LET ID '=' expr EOL            {$$ = new vardef_statement($ID, NULL_T, $expr, yylineno);}
-           | LET ID ':' type EOL            {$$ = new vardef_statement($ID, $type, nullptr, yylineno);}
            | LET ID ':' type '=' expr EOL   {$$ = new vardef_statement($ID, $type, $expr, yylineno);}
            | LET '&' ID '=' ID EOL          {$$ = new varref_statement($3, NULL_T, $5, yylineno);}
            | LET '&' ID ':' type '=' ID EOL {$$ = new varref_statement($3, $5, $7, yylineno);}
@@ -126,15 +125,6 @@
 
     output: OUTPUT '`' expr_list '`' EOL    {$$ = new output_statement($expr_list, yylineno);}
 
-    /* array */
-    // 由于array本身并不能用作数组字面量的类型关键字，所以得单独设定一个没有ARRAY_T的array_type
-    array_type: INT_T     {$$ = value_t::INT_T;}
-              | FLOAT_T   {$$ = value_t::FLOAT_T;}
-              | CHAR_T    {$$ = value_t::CHAR_T;}
-              | STRING_T  {$$ = value_t::STRING_T;}
-              | BOOL_T    {$$ = value_t::BOOL_T;}
-
-
     /* general */
     type: INT_T     {$$ = value_t::INT_T;}
         | FLOAT_T   {$$ = value_t::FLOAT_T;}
@@ -149,7 +139,6 @@
         | CHAR      {$$ = new literal(new char_value(yytext));}
         | STRING    {$$ = new literal(new string_value(yytext));}
         | BOOL      {$$ = new literal(new bool_value(yytext));}
-        | '[' array_type EOL expr ']' {$$ = nullptr;}// TODO: 数组字面量
         | '[' expr EOL expr ']' {$$ = nullptr;}// TODO: 数组字面量
         | fn_call           {$$ = $1;}
         | '(' expr ')'      {$$ = $2;}
