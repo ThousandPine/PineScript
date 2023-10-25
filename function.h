@@ -33,8 +33,8 @@ public:
     static gc_ptr<value> return_val;
     static std::stack<gc_ptr<function>> fncall_stack;
 
-    const int type;
     const std::string id;
+    const int type;
     const gc_ptr<args_def> args;
     const gc_ptr<statement> statements;
 

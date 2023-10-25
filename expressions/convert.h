@@ -5,8 +5,8 @@
 class convert_expression : public expression
 {
 protected:
-    const int _type;
     const gc_ptr<expression> _expr;
+    const int _type;
 
 public:
     convert_expression(const gc_ptr<expression> &expr, int type);

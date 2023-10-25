@@ -18,4 +18,5 @@ public:
     virtual std::string to_string() const;
 
     virtual gc_ptr<value> operator[](const value &val) const override;
+    using value::operator=;
 };

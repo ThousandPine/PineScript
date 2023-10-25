@@ -9,7 +9,7 @@
 void output(const char *tname, const char *text);
 %}
 
-%option noyywrap yylineno
+%option noyywrap yylineno nounput
 
 white               [ \n\t\r\f]|(\\\n)
 line_comment        \/.*\n

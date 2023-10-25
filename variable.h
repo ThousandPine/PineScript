@@ -15,9 +15,11 @@ private:
 public:
     static variable *create(const std::string &id, int type, bool is_ref, const gc_ptr<value> &val);
 
+    const std::string id;
     const int type;
     const bool is_ref;
-    const std::string id;
+
+    virtual ~variable(){}
 
     virtual gc_ptr<value> get_value() const;
     virtual gc_ptr<value> get_ref() const;

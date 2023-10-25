@@ -16,8 +16,8 @@ enum exec_state
 class statement
 {
 protected:
-    const int _end_lineno;
     const std::string _exec_msg;
+    const int _end_lineno;
 
     virtual void init() const;
     virtual int run() const = 0;
@@ -27,5 +27,6 @@ public:
     gc_ptr<statement> next = nullptr;
 
     statement(const std::string &exec_msg, const int end_lineno);
+    virtual ~statement(){}
     virtual int exec() const final;
 };
