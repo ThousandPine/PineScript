@@ -4,6 +4,7 @@
 #include "../state.h"
 
 std::unordered_map<int, std::string> value::_name{{VOID_T, "void"},
+                                                  {NULL_T, "null"},
                                                   {INT_T, "int"},
                                                   {FLOAT_T, "float"},
                                                   {CHAR_T, "char"},
@@ -21,6 +22,9 @@ gc_ptr<value> value::create(int type)
     {
     case VOID_T:
         return new void_value();
+        break;
+    case NULL_T:
+        return new null_value();
         break;
     case INT_T:
         return new int_value(0);

@@ -12,7 +12,9 @@ enum value_t
     FLOAT_T,
     CHAR_T,
     STRING_T,
-    BOOL_T
+    BOOL_T,
+
+    NULL_T
 };
 
 class value
