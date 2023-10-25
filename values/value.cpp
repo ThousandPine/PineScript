@@ -19,6 +19,9 @@ gc_ptr<value> value::create(int type)
 {
     switch (type)
     {
+    case VOID_T:
+        return new void_value();
+        break;
     case INT_T:
         return new int_value(0);
         break;
