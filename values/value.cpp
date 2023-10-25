@@ -20,15 +20,15 @@ gc_ptr<value> value::create(int type)
     switch (type)
     {
     case INT_T:
-        return new int_value(0); 
+        return new int_value(0);
         break;
     case FLOAT_T:
-        return new float_value(0.0); 
+        return new float_value(0.0);
         break;
     case BOOL_T:
         return new bool_value(false);
         break;
-    
+
     default:
         state::error("value::create unknow type number " + std::to_string(type));
         return nullptr;
@@ -38,7 +38,7 @@ gc_ptr<value> value::create(int type)
 
 /* ================================================= */
 
-value::value(int type) : type(type){}
+value::value(int type) : type(type) {}
 
 const std::string &value::type_name() const
 {
@@ -51,12 +51,12 @@ gc_ptr<value> value::convert(int type) const
     return nullptr;
 }
 
-#define OP_TEMPLATE(op)                                                                                \
-    gc_ptr<value> value::operator op(const value & val) const                                              \
-    {                                                                                                      \
-        state::error((std::string) "Type " +                                                               \
-                     this->type_name() + " does not support " + #op + " operations with" + val.type_name()); \
-        return nullptr;                                                                                    \
+#define OP_TEMPLATE(op)                                                                                       \
+    gc_ptr<value> value::operator op(const value & val) const                                                 \
+    {                                                                                                         \
+        state::error((std::string) "type '" +                                                                 \
+                     this->type_name() + "' does not support " + #op + " operations with" + val.type_name()); \
+        return nullptr;                                                                                       \
     }
 
 OP_TEMPLATE(*)
@@ -73,17 +73,17 @@ OP_TEMPLATE(!=)
 
 gc_ptr<value> value::operator!() const
 {
-    state::error((std::string) "Type " + this->type_name() + " does not support " + '!' + " operations");
+    state::error((std::string) "type '" + this->type_name() + "' does not support '!' operations");
     return nullptr;
 }
 gc_ptr<value> value::operator-() const
 {
-    state::error((std::string) "Type " + this->type_name() + " does not support " + "-(minus)" + " operations");
+    state::error((std::string) "type '" + this->type_name() + "' does not support '-(minus)' operations");
     return nullptr;
 }
 gc_ptr<value> value::operator=(const value &val)
 {
-    state::error((std::string) "Type " +
-                 this->type_name() + " does not support = operations with" + val.type_name());
+    state::error((std::string) "type '" +
+                 this->type_name() + "' does not support '=' operations with" + val.type_name());
     return nullptr;
 }
