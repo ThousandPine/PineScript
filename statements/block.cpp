@@ -40,5 +40,5 @@ int block_statement::run() const
 
 void block_statement::exit() const
 {
-    symtable::instance().enter_scope();
+    symtable::instance().exit_scope();
 }
