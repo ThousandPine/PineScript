@@ -47,6 +47,7 @@ bool                true|false
 "float"     TOKEN(FLOAT_T)
 "string"    TOKEN(STRING_T)
 "bool"      TOKEN(BOOL_T)
+"array"     TOKEN(ARRAY_T)
 "void"      TOKEN(VOID_T)
 
 "=="    TOKEN(EQ)

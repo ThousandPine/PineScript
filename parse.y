@@ -16,7 +16,7 @@
 %language "c++"
 
 %token IF ELSE ELIF WHILE BREAK CONTINUE RETURN FN AS LET INPUT OUTPUT
-%token INT_T CHAR_T FLOAT_T STRING_T BOOL_T VOID_T
+%token INT_T CHAR_T FLOAT_T STRING_T BOOL_T ARRAY_T VOID_T
 %token EQ NEQ GEQ LEQ RARROW EOL
 %token INT FLOAT CHAR STRING BOOL
 
@@ -31,6 +31,7 @@
 %left AS
 %right '!'
 %right UMINUS
+%left '[' ']'
 
 %union
 {
@@ -42,7 +43,7 @@
     expression *expr;
 }
 
-%type <i> fn_type type
+%type <i> fn_type type array_type
 %type <expr> expr fn_call
 %type <expr_l> expr_list expr_node
 %type <args> args_def arg_def_list arg_def
@@ -125,12 +126,22 @@
 
     output: OUTPUT '`' expr_list '`' EOL    {$$ = new output_statement($expr_list, yylineno);}
 
+    /* array */
+    // 由于array本身并不能用作数组字面量的类型关键字，所以得单独设定一个没有ARRAY_T的array_type
+    array_type: INT_T     {$$ = value_t::INT_T;}
+              | FLOAT_T   {$$ = value_t::FLOAT_T;}
+              | CHAR_T    {$$ = value_t::CHAR_T;}
+              | STRING_T  {$$ = value_t::STRING_T;}
+              | BOOL_T    {$$ = value_t::BOOL_T;}
+
+
     /* general */
     type: INT_T     {$$ = value_t::INT_T;}
         | FLOAT_T   {$$ = value_t::FLOAT_T;}
         | CHAR_T    {$$ = value_t::CHAR_T;}
         | STRING_T  {$$ = value_t::STRING_T;}
         | BOOL_T    {$$ = value_t::BOOL_T;}
+        | ARRAY_T   {$$ = value_t::ARRAY_T;}
 
     expr: ID        {$$ = new id_expression($ID);}
         | INT       {$$ = new literal(new int_value(yytext));}
@@ -138,8 +149,11 @@
         | CHAR      {$$ = new literal(new char_value(yytext));}
         | STRING    {$$ = new literal(new string_value(yytext));}
         | BOOL      {$$ = new literal(new bool_value(yytext));}
+        | '[' array_type EOL expr ']' {$$ = nullptr;}// TODO: 数组字面量
+        | '[' expr EOL expr ']' {$$ = nullptr;}// TODO: 数组字面量
         | fn_call           {$$ = $1;}
         | '(' expr ')'      {$$ = $2;}
+        | expr '[' expr ']' {$$ = nullptr;} // TODO: 下标访问
         | '-' expr %prec UMINUS {$$ = new minus_expression($2);}
         | '!' expr          {$$ = new not_expression($2);}
         | expr AS type      {$$ = new convert_expression($1, $3);}
