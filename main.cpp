@@ -35,6 +35,7 @@ int main(int argc, char **argv)
 int yyerror(const char *s)
 {
     printf("%s: line %d '%s'\n", s, yylineno, yytext);
+    exit(1);
     return 1;
 }
 
