@@ -25,13 +25,14 @@
     }
 
 #define VALUE_ASSIGN_TEMPLATE(value_type)                                                                         \
-    void value_type::operator=(const value &val)                                                                  \
+    bool value_type::operator=(const value &val)                                                                  \
     {                                                                                                             \
         if (val.type != this->type)                                                                               \
         {                                                                                                         \
             state::error("type '" +                                                                               \
                          this->type_name() + "' does not support '=' operations with '" + val.type_name() + "'"); \
-            return;                                                                                       \
+            return false;                                                                                         \
         }                                                                                                         \
         this->_val = ((const value_type *)&val)->_val;                                                            \
+        return true;                                                                                              \
     }

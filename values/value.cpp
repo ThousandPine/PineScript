@@ -40,7 +40,7 @@ gc_ptr<value> value::create(int type)
         return new char_value('\0');
         break;
     case STRING_T:
-        return new string_value((std::string)"");
+        return new string_value((std::string) "");
         break;
 
     default:
@@ -121,8 +121,9 @@ gc_ptr<value> value::operator-() const
     state::error((std::string) "type '" + this->type_name() + "' does not support '-(minus)' operations");
     return nullptr;
 }
-void value::operator=(const value &val)
+bool value::operator=(const value &val)
 {
     state::error((std::string) "type '" +
                  this->type_name() + "' does not support '=' operations with" + val.type_name());
+    return false;
 }

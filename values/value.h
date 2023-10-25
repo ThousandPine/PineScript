@@ -52,5 +52,5 @@ public:
     virtual gc_ptr<value> operator<=(const value &val) const;
     virtual gc_ptr<value> operator==(const value &val) const;
     virtual gc_ptr<value> operator!=(const value &val) const;
-    virtual void operator=(const value &val);
+    virtual bool operator=(const value &val);
 };
