@@ -5,6 +5,11 @@ assign_expression::assign_expression(const gc_ptr<expression> &expr1, const gc_p
 
 gc_ptr<value> assign_expression::get_value() const
 {
+    return this->get_ref()->copy();
+}
+
+gc_ptr<value> assign_expression::get_ref() const
+{
     auto ref = this->_expr1->get_ref();
     if (ref == nullptr)
     {
@@ -16,5 +21,6 @@ gc_ptr<value> assign_expression::get_value() const
         return nullptr;
     }
 
-    return (*ref) = (*val);
+    (*ref) = (*val);
+    return ref;
 }

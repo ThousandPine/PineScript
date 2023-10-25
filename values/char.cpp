@@ -118,4 +118,4 @@ VALUE_OP_TEMPLATE_C(char_value, <=, bool_value)
 VALUE_OP_TEMPLATE_C(char_value, ==, bool_value)
 VALUE_OP_TEMPLATE_C(char_value, !=, bool_value)
 
-VALUE_OP_TEMPLATE(char_value, =, char_value)
+VALUE_ASSIGN_TEMPLATE(char_value)

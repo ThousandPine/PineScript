@@ -63,4 +63,4 @@ VALUE_OP_TEMPLATE_C(string_value, <=, bool_value)
 VALUE_OP_TEMPLATE_C(string_value, ==, bool_value)
 VALUE_OP_TEMPLATE_C(string_value, !=, bool_value)
 
-VALUE_OP_TEMPLATE(string_value, =, string_value)
+VALUE_ASSIGN_TEMPLATE(string_value)

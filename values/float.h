@@ -28,5 +28,5 @@ public:
     virtual gc_ptr<value> operator<=(const value &val) const override;
     virtual gc_ptr<value> operator==(const value &val) const override;
     virtual gc_ptr<value> operator!=(const value &val) const override;
-    virtual gc_ptr<value> operator=(const value &val) override;
+    virtual void operator=(const value &val) override;
 };

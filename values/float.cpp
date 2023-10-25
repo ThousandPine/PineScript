@@ -64,4 +64,4 @@ VALUE_OP_TEMPLATE_C(float_value, <=, bool_value)
 VALUE_OP_TEMPLATE_C(float_value, ==, bool_value)
 VALUE_OP_TEMPLATE_C(float_value, !=, bool_value)
 
-VALUE_OP_TEMPLATE(float_value, =, float_value)
+VALUE_ASSIGN_TEMPLATE(float_value)

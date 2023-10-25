@@ -115,9 +115,8 @@ gc_ptr<value> value::operator-() const
     state::error((std::string) "type '" + this->type_name() + "' does not support '-(minus)' operations");
     return nullptr;
 }
-gc_ptr<value> value::operator=(const value &val)
+void value::operator=(const value &val)
 {
     state::error((std::string) "type '" +
                  this->type_name() + "' does not support '=' operations with" + val.type_name());
-    return nullptr;
 }

@@ -73,5 +73,5 @@ VALUE_OP_TEMPLATE_C(int_value, <=, bool_value)
 VALUE_OP_TEMPLATE_C(int_value, ==, bool_value)
 VALUE_OP_TEMPLATE_C(int_value, !=, bool_value)
 
-VALUE_OP_TEMPLATE(int_value, =, int_value)
+VALUE_ASSIGN_TEMPLATE(int_value)
 

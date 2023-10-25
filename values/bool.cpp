@@ -60,4 +60,4 @@ VALUE_IO_TEMPLATE(bool_value)
 VALUE_OP_TEMPLATE_C(bool_value, ==, bool_value)
 VALUE_OP_TEMPLATE_C(bool_value, !=, bool_value)
 
-VALUE_OP_TEMPLATE(bool_value, =, bool_value)
+VALUE_ASSIGN_TEMPLATE(bool_value)
