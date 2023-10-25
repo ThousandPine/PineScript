@@ -28,6 +28,12 @@ gc_ptr<value> value::create(int type)
     case BOOL_T:
         return new bool_value(false);
         break;
+    case CHAR_T:
+        return new char_value('\0');
+        break;
+    case STRING_T:
+        return new string_value((std::string)"");
+        break;
 
     default:
         state::error("value::create unknow type number " + std::to_string(type));
