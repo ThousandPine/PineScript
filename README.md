@@ -78,8 +78,8 @@ Pine Script是一个基于解释器运行的脚本语言，其语法参考自Rus
 ### 定义变量
 
 ```
-let NAME: TYPE = VALUE;
-let NAME: TYPE;
+let NAME: TYPE = VALUE; // type不包括void
+let NAME: TYPE;			// type不包括void
 let NAME = VALUE;
 ```
 
@@ -91,17 +91,18 @@ let NAME = VALUE;
 
 ```
 /* 字面量 */
-[TYPE;size]
-[VALUE;size] // VALUE可以时数组的字面量，即是说可以嵌套定义为多维数组
-/* 定义 */
-let NAME: array = [TYPE;size];
-let NAME: array = [VALUE;size];
+[TYPE;size]  // TYPE不能包括array和void
+[VALUE;size] // VALUE可以是数组的字面量，即是说可以嵌套定义为多维数组
 /* 样例 */
 let NAME: array = [int;5];     // 定义一个size为5的int数组
+let NAME: array = [2.33;5];	   // 定义一个初始值为5个2.33的float数组
 let NAME: array = [[int;5];5]; // 定义一个size为5x5的int数组
+// 数组只能在定义时使用赋值，并且默认为引用传递
+let a1 = [int;5];
+let a2 = a1;		// a2和a1指向同一个数组空间
 ```
 
-定义数组时必须初始化，只能对基本单元进行赋值和修改，不能对数组本身进行赋值操作（比如把一个数组赋值给另一个数组），这主要是为了防止出现循环引用。
+为了防止出现循环引用，数组**定义后**只能对基本单元进行赋值和修改，不能对数组本身进行赋值操作（比如把一个数组赋值给另一个数组）。
 
 ### 左值引用
 
