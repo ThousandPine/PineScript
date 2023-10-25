@@ -79,7 +79,6 @@ Pine Script是一个基于解释器运行的脚本语言，其语法参考自Rus
 
 ```
 let NAME: TYPE = VALUE; // type不包括void
-let NAME: TYPE;			// type不包括void
 let NAME = VALUE;
 ```
 
@@ -91,7 +90,6 @@ let NAME = VALUE;
 
 ```
 /* 字面量 */
-[TYPE;size]  // TYPE不能包括array和void
 [VALUE;size] // VALUE可以是数组的字面量，即是说可以嵌套定义为多维数组
 /* 样例 */
 let NAME: array = [int;5];     // 定义一个size为5的int数组
