@@ -102,11 +102,11 @@ let NAME: array = [[int;5];5]; // 定义一个size为5x5的int数组
 ### 左值引用
 
 ```
-let &NAME: TYPE = variable;
-let &NAME = variable;
+let &NAME: TYPE = LVALUE;
+let &NAME = LVALUE;
 ```
 
-语法与定义变量基本相同，主要是在let和NAME之间加了个&符号，并且等号右侧必须为变量
+语法与定义变量基本相同，主要是在let和NAME之间加了个&符号，并且等号右侧必须为左值类型，比如变量和数组
 
 ### 定义函数
 
