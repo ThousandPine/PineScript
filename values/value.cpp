@@ -45,6 +45,27 @@ const std::string &value::type_name() const
     return value::type_to_name(this->type);
 }
 
+void value::input()
+{
+    state::error("input cannot be performed on '" + this->type_name() + "' type");
+    return;
+}
+void value::output() const
+{
+    state::error("output cannot be performed on '" + this->type_name() + "' type");
+    return;
+}
+std::string value::to_string() const
+{
+    state::error("type '" + this->type_name() + "' does not support to string");
+    return "";
+}
+gc_ptr<value> value::copy() const
+{
+    state::error("Cannot copy '" + this->type_name() + "' value");
+    return nullptr;
+}
+
 gc_ptr<value> value::convert(int type) const
 {
     CONVERT_ERROR();

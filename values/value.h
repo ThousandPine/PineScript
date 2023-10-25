@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stack>
-#include <queue>
 #include <string>
 #include <unordered_map>
 
@@ -30,10 +28,10 @@ public:
 
     value(int type);
 
-    virtual void input() = 0;
-    virtual void output() const = 0;
-    virtual gc_ptr<value> copy() const = 0;
-    virtual std::string to_string() const = 0;
+    virtual void input();
+    virtual void output() const;
+    virtual gc_ptr<value> copy() const;
+    virtual std::string to_string() const;
     virtual const std::string &type_name() const;
 
     virtual gc_ptr<value> operator-() const;
