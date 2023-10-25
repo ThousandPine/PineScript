@@ -94,10 +94,10 @@
     block: '{' fn_statements '}'    {$$ = new block_statement($fn_statements);}
 
     /* var */
-    var_def: LET ID '=' expr EOL            {$$ = new vardef_statement($ID, VOID_T, $expr, yylineno);}
+    var_def: LET ID '=' expr EOL            {$$ = new vardef_statement($ID, NULL_T, $expr, yylineno);}
            | LET ID ':' type EOL            {$$ = new vardef_statement($ID, $type, nullptr, yylineno);}
            | LET ID ':' type '=' expr EOL   {$$ = new vardef_statement($ID, $type, $expr, yylineno);}
-           | LET '&' ID '=' ID EOL          {$$ = new varref_statement($3, VOID_T, $5, yylineno);}
+           | LET '&' ID '=' ID EOL          {$$ = new varref_statement($3, NULL_T, $5, yylineno);}
            | LET '&' ID ':' type '=' ID EOL {$$ = new varref_statement($3, $5, $7, yylineno);}
 
     /* if-else */

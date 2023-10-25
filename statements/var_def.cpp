@@ -7,7 +7,7 @@ vardef_statement::vardef_statement(const std::string &id, int type, const gc_ptr
 
 int vardef_statement::run() const
 {
-    auto var = variable::create(this->_id, this->_type, false, this->_expr == nullptr ? nullptr : this->_expr->get_value());
+    auto var = variable::create(this->_id, this->_type, false, this->_expr == nullptr ? value::create(NULL_T) : this->_expr->get_value());
 
     if (var == nullptr)
     {
