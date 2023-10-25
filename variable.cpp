@@ -48,6 +48,12 @@ variable *variable::create(const std::string &id, int type, bool is_ref, const g
             state::error("untyped variable \"" + id + "\" requires an initializer");
             return nullptr;
         }
+        
+        auto init_val = value::create(type);
+        if (init_val == nullptr)
+        {
+            return nullptr;
+        }
         return new variable(id, value::create(type), type, false);
     }
     if (type != NULL_T && val->type != type)
