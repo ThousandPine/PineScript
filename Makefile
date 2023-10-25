@@ -1,6 +1,6 @@
 TAR=pine
 CC=g++
-CFLAGS=-W -g
+CFLAGS=-Wall -g
 FLEX=lex.yy.cpp
 BISON=y.tab.cpp y.tab.h
 SRC=$(wildcard ./*.cpp ./*/*.cpp)
