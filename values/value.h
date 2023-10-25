@@ -13,6 +13,7 @@ enum value_t
     CHAR_T,
     STRING_T,
     BOOL_T,
+    ARRAY_T,
 
     NULL_T
 };
@@ -36,6 +37,7 @@ public:
     virtual std::string to_string() const;
     virtual const std::string &type_name() const;
 
+    virtual gc_ptr<value> operator[](const value &val) const;
     virtual gc_ptr<value> operator-() const;
     virtual gc_ptr<value> operator!() const;
     virtual gc_ptr<value> convert(int type) const;

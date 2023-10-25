@@ -11,6 +11,7 @@ public:
     int_value(int val);
     int_value(const char *s);
 
+    int val() const;
     virtual void input() override;
     virtual void output() const override;
     virtual gc_ptr<value> copy() const override;

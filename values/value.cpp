@@ -9,7 +9,8 @@ std::unordered_map<int, std::string> value::_name{{VOID_T, "void"},
                                                   {FLOAT_T, "float"},
                                                   {CHAR_T, "char"},
                                                   {STRING_T, "string"},
-                                                  {BOOL_T, "bool"}};
+                                                  {BOOL_T, "bool"},
+                                                  {ARRAY_T, "array"}};
 
 const std::string &value::type_to_name(int type)
 {
@@ -105,6 +106,11 @@ OP_TEMPLATE(<=)
 OP_TEMPLATE(==)
 OP_TEMPLATE(!=)
 
+gc_ptr<value> value::operator[](const value &val) const
+{
+    state::error((std::string) "type '" + this->type_name() + "' does not support '[]' operations");
+    return nullptr;
+}
 gc_ptr<value> value::operator!() const
 {
     state::error((std::string) "type '" + this->type_name() + "' does not support '!' operations");

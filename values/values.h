@@ -5,5 +5,6 @@
 #include "char.h"
 #include "string.h"
 #include "bool.h"
+#include "array.h"
 #include "void.h"
 #include "null.h"

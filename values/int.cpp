@@ -11,6 +11,11 @@ int_value::int_value(const char *s) : value(INT_T)
     this->_val = atoi(s);
 }
 
+int int_value::val() const
+{
+    return this->_val;
+}
+
 std::string int_value::to_string() const
 {
     return std::to_string(this->_val);

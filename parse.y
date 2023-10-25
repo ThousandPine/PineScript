@@ -139,10 +139,10 @@
         | CHAR      {$$ = new literal(new char_value(yytext));}
         | STRING    {$$ = new literal(new string_value(yytext));}
         | BOOL      {$$ = new literal(new bool_value(yytext));}
-        | '[' expr EOL expr ']' {$$ = nullptr;}// TODO: 数组字面量
+        | '[' expr EOL expr ']' {$$ = new array_literal($2, $4);}
         | fn_call           {$$ = $1;}
         | '(' expr ')'      {$$ = $2;}
-        | expr '[' expr ']' {$$ = nullptr;} // TODO: 下标访问
+        | expr '[' expr ']' {$$ = new index_expression($1, $3);}
         | '-' expr %prec UMINUS {$$ = new minus_expression($2);}
         | '!' expr          {$$ = new not_expression($2);}
         | expr AS type      {$$ = new convert_expression($1, $3);}
