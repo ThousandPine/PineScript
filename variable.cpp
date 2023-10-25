@@ -18,7 +18,6 @@
  */
 variable *variable::create(const std::string &id, int type, bool is_ref, const gc_ptr<value> &val)
 {
-    /* TODO: */
     if (val == nullptr)
     {
         return nullptr;
