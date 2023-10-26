@@ -31,7 +31,6 @@ bool                true|false
 
 "if"        TOKEN(IF)
 "else"      TOKEN(ELSE)
-"else if"   TOKEN(ELIF)
 "while"     TOKEN(WHILE)
 "return"    TOKEN(RETURN)
 "break"     TOKEN(BREAK)

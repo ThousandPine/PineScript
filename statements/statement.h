@@ -7,6 +7,8 @@
 enum exec_state
 {
     DONE,
+    MATCH,
+    MISMATCH,
     RETURN,
     BREAK,
     CONTINUE,

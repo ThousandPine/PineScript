@@ -8,3 +8,5 @@
 #include "output.h"
 #include "return.h"
 #include "var_def.h"
+#include "condition.h"
+#include "if.h"
