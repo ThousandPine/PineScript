@@ -10,3 +10,6 @@
 #include "var_def.h"
 #include "condition.h"
 #include "if.h"
+#include "while.h"
+#include "break.h"
+#include "continue.h"

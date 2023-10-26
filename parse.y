@@ -50,7 +50,7 @@
 %type <expr> expr fn_call
 %type <expr_l> expr_list expr_node
 %type <args> args_def arg_def_list arg_def
-%type <stmt> fn_statements fn_statement block var_def input output if_else condition
+%type <stmt> fn_statements fn_statement var_def input output condition while_loop loop_statement loop_statements
 
 %%
 
@@ -83,19 +83,18 @@
     fn_statements: /* e */                      {$$ = nullptr;}
                 | fn_statement fn_statements    {$$ = $1; $1->next = $2;}
                 
-    fn_statement: EOL               {$$ = new blank_statement();}
-                | block             {$$ = $1;}
-                | expr EOL          {$$ = new expr_statement($expr, yylineno);}
-                | var_def           {$$ = $1;}
-                | if_else           {$$ = $1;}
-            //  | while_loop
-                | input             {$$ = $1;}
-                | output            {$$ = $1;}
-                | RETURN expr EOL   {$$ = new return_statement($expr, yylineno);}
-                | RETURN EOL        {$$ = new return_statement(nullptr, yylineno);}
-
-    /* block */
-    block: '{' fn_statements '}'    {$$ = new block_statement($fn_statements);}
+    fn_statement: EOL                    {$$ = new blank_statement();}
+                | expr EOL               {$$ = new expr_statement($expr, yylineno);}
+                | '{' fn_statements '}'  {$$ = new block_statement($fn_statements);}
+                | RETURN expr EOL        {$$ = new return_statement($expr, yylineno);}
+                | RETURN EOL             {$$ = new return_statement(nullptr, yylineno);}
+                | var_def                {$$ = $1;}
+                | while_loop             {$$ = $1;}
+                | input                  {$$ = $1;}
+                | output                 {$$ = $1;}
+                | IF '(' condition ')' fn_statement  %prec LOWER_THAN_ELSE   {$$ = new if_statement($condition, $5, nullptr);}
+                | IF '(' condition ')' fn_statement ELSE fn_statement        {$$ = new if_statement($condition, $5, $7);}
+    
 
     /* var */
     var_def: LET ID '=' expr EOL            {$$ = new vardef_statement($ID, false, NULL_T, $expr, yylineno);}
@@ -103,22 +102,27 @@
            | LET '&' ID '=' expr EOL          {$$ = new vardef_statement($ID, true, NULL_T, $expr, yylineno);}
            | LET '&' ID ':' type '=' expr EOL {$$ = new vardef_statement($ID, true, $type, $expr, yylineno);}
 
-    /* if-else */
-    if_else: IF '(' condition ')' fn_statement  %prec LOWER_THAN_ELSE   {$$ = new if_statement($condition, $5, nullptr);}
-           | IF '(' condition ')' fn_statement ELSE fn_statement        {$$ = new if_statement($condition, $5, $7);}
-    
-    condition: expr {$$ = new condition($expr, yylineno);}
-
     /* while */
 
-    // while_loop: WHILE '(' expr ')' '{' while_statements '}'
+    while_loop: WHILE '(' condition ')' loop_statement   {$$ = new while_statement($condition, $loop_statement);}
 
-    // while_statements: /* e */
-    //                 | while_statement while_statements 
+    loop_statements: /* e */                        {$$ = nullptr;}
+                   | loop_statement loop_statements {$$ = $1; $1->next = $2;}
 
-    // while_statement: fn_statement
-    //                | BREAK EOL
-    //                | CONTINUE EOL
+    loop_statement: EOL                      {$$ = new blank_statement();}
+                  | expr EOL                 {$$ = new expr_statement($expr, yylineno);}
+                  | '{' loop_statements '}'  {$$ = new block_statement($loop_statements);}
+                  | RETURN expr EOL          {$$ = new return_statement($expr, yylineno);}
+                  | RETURN EOL               {$$ = new return_statement(nullptr, yylineno);}
+                  | BREAK EOL                {$$ = new break_statement();}
+                  | CONTINUE EOL             {$$ = new continue_statement();}
+                  | var_def                  {$$ = $1;}
+                  | while_loop               {$$ = $1;}
+                  | input                    {$$ = $1;}
+                  | output                   {$$ = $1;}
+                  | IF '(' condition ')' loop_statement  %prec LOWER_THAN_ELSE  {$$ = new if_statement($condition, $5, nullptr);}
+                  | IF '(' condition ')' loop_statement ELSE loop_statement     {$$ = new if_statement($condition, $5, $7);}
+    
 
     /* IO */
     input: INPUT '`' expr_list '`' EOL      {$$ = new input_statement($expr_list, yylineno);}
@@ -126,6 +130,8 @@
     output: OUTPUT '`' expr_list '`' EOL    {$$ = new output_statement($expr_list, yylineno);}
 
     /* general */
+    condition: expr {$$ = new condition($expr, yylineno);}
+
     type: INT_T     {$$ = value_t::INT_T;}
         | FLOAT_T   {$$ = value_t::FLOAT_T;}
         | CHAR_T    {$$ = value_t::CHAR_T;}

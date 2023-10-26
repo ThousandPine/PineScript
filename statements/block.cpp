@@ -24,14 +24,8 @@ int block_statement::run() const
             stmt = stmt->next;
             break;
 
-        case RETURN:
-            return RETURN;
-
-        case ERROR:
-            return ERROR;
         default:
-            state::error("unknown execution status " + std::to_string(exec_state));
-            return ERROR;
+            return exec_state;
         }
     }
 
