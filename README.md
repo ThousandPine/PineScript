@@ -12,6 +12,34 @@ Pine Script是一个基于解释器运行的脚本语言，其语法参考自Rus
 
 ## 代码样例
 
+```
+/*  样例：递归+记忆化计算斐波那契数列 */
+
+let size = 1 + 1e5 as int;
+let vis = [false; size];    // 记录访问
+let mem = [0; size];        // 记录结果
+
+fn fib(n:int) -> int {
+    if (vis[n])
+        return mem[n];
+    vis[n] = true;
+
+    if(n == 0)
+        return 0;
+    else if(n == 1)
+        return 1;
+    else
+        return mem[n] = fib(n - 1) + fib(n - 2);
+}
+
+fn main() -> int {
+    let a = 233;
+    input `a`;
+    output `fib(a)`;
+    return 0;
+}
+```
+
 
 
 ## 数据类型
@@ -125,31 +153,25 @@ VALUE as TYPE
 VALUE as TYPE_1 as TYPE_2 ...
 ```
 
-### 控制流语句（待实现）
+### 控制流语句
+
+语法与C语言相同
 
 #### if-else
 
 ```
-if (condition) {
-	STATEMENTS
-} else if (condition) {
-	STATEMENTS
-} else if (condition) {
-	STATEMENTS
-} else {
-	STATEMENTS
-}
+if (condition)
+	statement
+else
+	statement
 ```
 
-#### while
+#### while（待实现）
 
 ```
-while (condition) {
-	STATEMENTS
-}
+while (condition) 
+	statement
 ```
-
-condition为bool类型表达式
 
 ### 输入&输出
 
