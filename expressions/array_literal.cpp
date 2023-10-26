@@ -20,7 +20,7 @@ gc_ptr<value> array_literal::get_value() const
     }
     if (size_val->type != INT_T)
     {
-        state::error("the index of operator '[]' must be of type '" + value::type_to_name(INT_T) + "', but the input type is '" + val->type_name() + "'");
+        state::error("the index of operator '[]' must be of type '" + value::type_to_name(INT_T) + "', but the provided operand type is of type '" + val->type_name() + "'");
         return nullptr;
     }
 
