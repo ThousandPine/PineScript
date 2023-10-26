@@ -160,9 +160,9 @@ let NAME = VALUE;
 /* 字面量 */
 [VALUE;size] // VALUE可以是数组的字面量，即是说可以嵌套定义为多维数组
 /* 样例 */
-let NAME: array = [int;5];     // 定义一个size为5的int数组
+let NAME: array = [0;5];     // 定义一个初始值为5个0的int数组
 let NAME: array = [2.33;5];	   // 定义一个初始值为5个2.33的float数组
-let NAME: array = [[int;5];5]; // 定义一个size为5x5的int数组
+let NAME: array = [[0;5];5]; // 定义一个size为5x5的int数组
 ```
 
 为了防止出现循环引用，数组**定义后**只能对基本单元进行赋值和修改，不能对数组本身进行赋值操作（比如把一个数组赋值给另一个数组）。
