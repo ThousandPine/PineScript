@@ -40,6 +40,46 @@ fn main() -> int {
 }
 ```
 
+```
+/* 
+ 样例：简单DP算法
+ P1216 [USACO1.5] [IOI1994]数字三角形 Number Triangles 
+ https://www.luogu.com.cn/problem/P1216
+*/
+
+let size = 1 + 1e3 as int;
+let dp = [[0; size]; size];
+
+fn max(a: int, b: int) -> int {
+    if (a >= b)
+        return a;
+    return b;
+}
+
+fn main() -> int {
+    let n = 0;
+    let ans = 0;
+    input `n`;
+
+    let i = 1;
+    while (i <= n)
+    {
+        let j = 1;
+        while (j <= i)
+        {
+            input `dp[i][j]`;
+            dp[i][j] = dp[i][j] + max(dp[i - 1][j - 1], dp[i - 1][j]);
+            ans = max(dp[i][j], ans);
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+
+    output `ans`;
+    return 0;
+}
+```
+
 
 
 ## 数据类型
@@ -166,7 +206,7 @@ else
 	statement
 ```
 
-#### while（待实现）
+#### while
 
 ```
 while (condition) 
