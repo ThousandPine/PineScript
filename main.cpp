@@ -18,7 +18,24 @@ void output(const char *tname, const char *text)
 
 int main(int argc, char **argv)
 {
-    yyin = fopen("./test.txt", "r");
+    if (argc < 2)
+    {
+        puts("No filename provided. Please provide a filename as an argument.");
+        return 1;
+    }
+    if (argc > 2)
+    {
+        puts("Multiple filenames provided. This interpreter only supports one file at a time.");
+        return 1;
+    }
+    
+    yyin = fopen(argv[1], "r");
+    if(yyin == NULL)
+    {
+        puts("Unable to open the file path provided. Please check the file path and try again.");
+        return 1;
+    }
+
     lex_out = fopen(lex_out_path, "w");
     
     yy::parser parser;
