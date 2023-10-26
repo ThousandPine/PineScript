@@ -22,6 +22,8 @@
 
 %token <s> ID
 
+%nonassoc LOWER_THAN_ELSE    
+%nonassoc ELSE
 %left ','
 %right '='
 %left AND OR
@@ -48,7 +50,7 @@
 %type <expr> expr fn_call
 %type <expr_l> expr_list expr_node
 %type <args> args_def arg_def_list arg_def
-%type <stmt> fn_statements fn_statement matched_statement block var_def input output matched_if unmatched_if condition
+%type <stmt> fn_statements fn_statement block var_def input output if_else condition
 
 %%
 
@@ -81,8 +83,16 @@
     fn_statements: /* e */                      {$$ = nullptr;}
                 | fn_statement fn_statements    {$$ = $1; $1->next = $2;}
                 
-    fn_statement: matched_statement         {$$ = $1;}
-                | unmatched_if              {$$ = $1;}
+    fn_statement: EOL               {$$ = new blank_statement();}
+                | block             {$$ = $1;}
+                | expr EOL          {$$ = new expr_statement($expr, yylineno);}
+                | var_def           {$$ = $1;}
+                | if_else           {$$ = $1;}
+            //  | while_loop
+                | input             {$$ = $1;}
+                | output            {$$ = $1;}
+                | RETURN expr EOL   {$$ = new return_statement($expr, yylineno);}
+                | RETURN EOL        {$$ = new return_statement(nullptr, yylineno);}
 
     /* block */
     block: '{' fn_statements '}'    {$$ = new block_statement($fn_statements);}
@@ -94,12 +104,11 @@
            | LET '&' ID ':' type '=' expr EOL {$$ = new vardef_statement($ID, true, $type, $expr, yylineno);}
 
     /* if-else */
-    matched_if: IF '(' condition ')' matched_statement ELSE matched_statement   {$$ = new if_statement($condition, $5, $7);}
-
-    unmatched_if: IF '(' condition ')' fn_statement                             {$$ = new if_statement($condition, $5, nullptr);}
+    if_else: IF '(' condition ')' fn_statement  %prec LOWER_THAN_ELSE   {$$ = new if_statement($condition, $5, nullptr);}
+           | IF '(' condition ')' fn_statement ELSE fn_statement        {$$ = new if_statement($condition, $5, $7);}
     
-
     condition: expr {$$ = new condition($expr, yylineno);}
+
     /* while */
 
     // while_loop: WHILE '(' expr ')' '{' while_statements '}'
@@ -153,19 +162,6 @@
         | expr '=' expr     {$$ = new assign_expression($1, $3);}
 
     /*  */
-    matched_statement: EOL               {$$ = new blank_statement();}
-                     | block             {$$ = $1;}
-                     | expr EOL          {$$ = new expr_statement($expr, yylineno);}
-                     | var_def           {$$ = $1;}
-                     | matched_if        {$$ = $1;}
-                    //  | while_loop
-                     | input             {$$ = $1;}
-                     | output            {$$ = $1;}
-                     | RETURN expr EOL   {$$ = new return_statement($expr, yylineno);}
-                     | RETURN EOL        {$$ = new return_statement(nullptr, yylineno);}
-
-    /*  */
-
     fn_call: ID '(' expr_list ')'     {$$ = new fncall_expression($ID, $expr_list);}
 
     expr_list: /* e */                {$$ = nullptr;}
