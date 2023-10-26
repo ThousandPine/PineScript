@@ -17,13 +17,14 @@
 
 %token IF ELSE ELIF WHILE BREAK CONTINUE RETURN FN AS LET INPUT OUTPUT
 %token INT_T CHAR_T FLOAT_T STRING_T BOOL_T ARRAY_T VOID_T
-%token EQ NEQ GEQ LEQ RARROW EOL
+%token EQ NEQ GEQ LEQ AND OR RARROW EOL
 %token INT FLOAT CHAR STRING BOOL
 
 %token <s> ID
 
 %left ','
 %right '='
+%left AND OR
 %left EQ NEQ
 %left '>' '<' GEQ LEQ
 %left '+' '-'
@@ -157,6 +158,8 @@
         | expr LEQ expr     {$$ = new leq_expression($1, $3);}
         | expr EQ expr      {$$ = new eq_expression($1, $3);}
         | expr NEQ expr     {$$ = new neq_expression($1, $3);}
+        | expr AND expr     {$$ = new and_expression($1, $3);}
+        | expr OR expr      {$$ = new or_expression($1, $3);}
         | expr '=' expr     {$$ = new assign_expression($1, $3);}
 
     /*  */

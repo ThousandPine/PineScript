@@ -54,6 +54,8 @@ bool                true|false
 "!="    TOKEN(NEQ)
 ">="    TOKEN(GEQ)
 "<="    TOKEN(LEQ)
+"&&"    TOKEN(AND)
+"||"    TOKEN(OR)
 "->"    TOKEN(RARROW)
 ";"     TOKEN(EOL)
 

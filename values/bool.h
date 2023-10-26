@@ -11,6 +11,7 @@ public:
     bool_value(bool val);
     bool_value(const char *s);
 
+    bool val() const;
     virtual void input() override;
     virtual void output() const override;
     virtual gc_ptr<value> copy() const override;

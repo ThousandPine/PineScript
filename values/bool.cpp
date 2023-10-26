@@ -16,6 +16,11 @@ bool_value::bool_value(const char *s) : value(BOOL_T)
     this->_val = strcmp(s, "false");
 }
 
+bool bool_value::val() const
+{
+    return this->_val;
+}
+
 std::string bool_value::to_string() const
 {
     return this->_val ? "true" : "false";
