@@ -3,7 +3,7 @@
 #define EXPR_TEMPLATE(class, op)                                                                                      \
     class ::class(const gc_ptr<expression> &expr1, const gc_ptr<expression> &expr2) : _expr1(expr1), _expr2(expr2) {} \
                                                                                                                       \
-    gc_ptr<value> class ::get_value() const                                                                           \
+    gc_ptr<const value> class ::get_value() const                                                                     \
     {                                                                                                                 \
         auto val1 = _expr1->get_value();                                                                              \
         if (val1 == nullptr)                                                                                          \

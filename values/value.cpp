@@ -17,7 +17,7 @@ const std::string &value::type_to_name(int type)
     return _name[type];
 }
 
-gc_ptr<value> value::create(int type)
+gc_ptr<const value> value::create(int type)
 {
     switch (type)
     {

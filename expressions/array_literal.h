@@ -9,5 +9,5 @@ protected:
 
 public:
     array_literal(const gc_ptr<expression> &expr1, const gc_ptr<expression> &expr2);
-    virtual gc_ptr<value> get_value() const override;
+    virtual gc_ptr<const value> get_value() const override;
 };

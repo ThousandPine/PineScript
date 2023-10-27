@@ -9,5 +9,5 @@ protected:
 
 public:
     not_expression(const gc_ptr<expression> &expr);
-    virtual gc_ptr<value> get_value() const override;
+    virtual gc_ptr<const value> get_value() const override;
 };

@@ -30,7 +30,7 @@ public:
 class function
 {
 public:
-    static gc_ptr<value> return_val;
+    static gc_ptr<const value> return_val;
     static std::stack<gc_ptr<function>> fncall_stack;
 
     const std::string id;

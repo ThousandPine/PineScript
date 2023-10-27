@@ -10,5 +10,5 @@ private:
 public:
     literal(const gc_ptr<value> &val);
 
-    virtual gc_ptr<value> get_value() const override;
+    virtual gc_ptr<const value> get_value() const override;
 };

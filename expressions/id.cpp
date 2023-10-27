@@ -3,15 +3,9 @@
 
 id_expression::id_expression(const std::string &id) : _id(id) {}
 
-gc_ptr<value> id_expression::get_value() const
+gc_ptr<const value> id_expression::get_value() const
 {
-    auto var = symtable::instance().get_var(this->_id);
-
-    if (var == nullptr)
-    {
-        return nullptr;
-    }
-    return var->get_value();
+    return this->get_ref();
 }
 
 gc_ptr<value> id_expression::get_ref() const

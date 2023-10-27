@@ -5,9 +5,9 @@
 
 fncall_expression::fncall_expression(const std::string &id, const gc_ptr<expr_list> &args) : _id(id), _expr_list(args) {}
 
-gc_ptr<value> fncall_expression::get_value() const
+gc_ptr<const value> fncall_expression::get_value() const
 {
-    gc_ptr<value> ret_val = nullptr;
+    gc_ptr<const value> ret_val = nullptr;
 
     symtable::instance().enter_scope();
 
@@ -44,14 +44,24 @@ gc_ptr<function> fncall_expression::_fn_init() const
     for (; arg != nullptr && expr_node != nullptr; arg = arg->next, expr_node = expr_node->next)
     {
         /* 创建参数变量 */
-        auto val = arg->is_ref ? expr_node->expr->get_ref() : expr_node->expr->get_value();
-        if (val == nullptr)
+        variable *var = nullptr;
+
+        if (arg->is_ref)
+        {
+            auto val = expr_node->expr->get_ref();
+            var = variable::create_ref(arg->id, arg->type, val);
+        }
+        else
+        {
+            auto val = expr_node->expr->get_value();
+            var = variable::create_new(arg->id, arg->type, val);
+        }
+
+        if (var == nullptr)
         {
             return nullptr;
         }
-        bool res = symtable::instance().def_var(variable::create(arg->id, arg->type, arg->is_ref, val));
-
-        if (res == false)
+        if (symtable::instance().def_var(var) == false)
         {
             return nullptr;
         }
@@ -71,7 +81,7 @@ gc_ptr<function> fncall_expression::_fn_init() const
     return fn;
 }
 
-gc_ptr<value> fncall_expression::_fn_run(gc_ptr<function> fn) const
+gc_ptr<const value> fncall_expression::_fn_run(gc_ptr<function> fn) const
 {
     /* 运行函数语句 */
     int exec_state = DONE;

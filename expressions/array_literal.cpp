@@ -5,7 +5,7 @@
 
 array_literal::array_literal(const gc_ptr<expression> &expr1, const gc_ptr<expression> &expr2) : _expr1(expr1), _expr2(expr2) {}
 
-gc_ptr<value> array_literal::get_value() const
+gc_ptr<const value> array_literal::get_value() const
 {
     auto val = this->_expr1->get_value();
     if (val == nullptr)

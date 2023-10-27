@@ -5,7 +5,7 @@
 
 or_expression::or_expression(const gc_ptr<expression> &expr1, const gc_ptr<expression> &expr2) : _expr1(expr1), _expr2(expr2) {}
 
-gc_ptr<value> or_expression::get_value() const
+gc_ptr<const value> or_expression::get_value() const
 {
     /* 分开计算两个表达式实现短路 */
     decltype(this->_expr1) exprs[]{this->_expr1, this->_expr2};
@@ -24,7 +24,7 @@ gc_ptr<value> or_expression::get_value() const
         }
         if (true == ((const bool_value *)&*val) -> val())
         {
-            return new bool_value(true);
+            return val;
         }
     }
 

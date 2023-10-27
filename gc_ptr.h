@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-/** 
+/**
  * 引用计数方式实现的智能指针
  * NOTE:不要传入在栈上创建的对象的指针
  */
@@ -48,7 +48,14 @@ public:
     gc_ptr(const gc_ptr<T> &p)
     {
         this->_deref();
-        this->_ref(p._ptr, p._cnt);
+        this->_ref(p.ptr(), p.cnt());
+    }
+
+    template <typename U>
+    gc_ptr(const gc_ptr<U> &p)
+    {
+        this->_deref();
+        this->_ref(p.ptr(), p.cnt());
     }
 
     ~gc_ptr()
@@ -56,13 +63,16 @@ public:
         _deref();
     }
 
+    T *ptr() const { return this->_ptr; }
+    int *cnt() const { return this->_cnt; }
+
     gc_ptr<T> &operator=(const gc_ptr<T> &p)
     {
         this->_deref();
         this->_ref(p._ptr, p._cnt);
         return *this;
     }
-    
+
     T &operator*() const
     {
         return *_ptr;

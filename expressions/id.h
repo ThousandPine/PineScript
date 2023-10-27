@@ -9,6 +9,6 @@ protected:
 
 public:
     id_expression(const std::string &id);
-    virtual gc_ptr<value> get_value() const override;
+    virtual gc_ptr<const value> get_value() const override;
     virtual gc_ptr<value> get_ref() const override;
 };

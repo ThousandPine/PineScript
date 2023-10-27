@@ -2,7 +2,7 @@
 
 literal::literal(const gc_ptr<value> &val):_val(val){}
 
-gc_ptr<value> literal::get_value() const
+gc_ptr<const value> literal::get_value() const
 {
-    return this->_val->copy();
+    return this->_val;
 }

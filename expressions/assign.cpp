@@ -3,10 +3,9 @@
 
 assign_expression::assign_expression(const gc_ptr<expression> &expr1, const gc_ptr<expression> &expr2) : _expr1(expr1), _expr2(expr2) {}
 
-gc_ptr<value> assign_expression::get_value() const
+gc_ptr<const value> assign_expression::get_value() const
 {
-    auto ref = this->get_ref();
-    return ref == nullptr ? nullptr : ref->copy();
+    return this->get_ref();
 }
 
 gc_ptr<value> assign_expression::get_ref() const

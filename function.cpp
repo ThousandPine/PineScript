@@ -11,7 +11,7 @@ expr_list::expr_list(const gc_ptr<expression> &expr) : expr(expr) {}
 
 /* ================================= */
 
-gc_ptr<value> function::return_val = nullptr;
+gc_ptr<const value> function::return_val = nullptr;
 std::stack<gc_ptr<function>> function::fncall_stack;
 
 function::function(const std::string &id, int type, const gc_ptr<args_def> &args, const gc_ptr<statement> &statements)
