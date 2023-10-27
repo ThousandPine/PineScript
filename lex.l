@@ -2,11 +2,9 @@
 #include <stdio.h>
 #include "y.tab.h"
 
-#define RET(x) {output(#x, yytext) ; return x;}
-#define TOKEN(x) {output(#x, yytext) ; return yy::parser::token::x;}
+#define RET(x) {return x;}
+#define TOKEN(x) {return yy::parser::token::x;}
 #define YY_DECL int yylex(yy::parser::value_type *value)
-
-void output(const char *tname, const char *text);
 %}
 
 %option noyywrap yylineno nounput
