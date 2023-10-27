@@ -8,7 +8,6 @@ BISON=y.tab.cpp y.tab.h
 SRC=$(wildcard ./*.cpp ./*/*.cpp)
 DEPS=$(SRC:.cpp=.d)
 OBJ=$(SRC:.cpp=.o)
-OBJ=$(SRC:.cpp=.o)
 GEN_OBJ=$(BISON:.cpp=.o) $(FLEX:.cpp=.o)
 
 -include $(DEPS)
@@ -28,7 +27,7 @@ $(BISON): parse.y
 $(TAR): $(FLEX) $(BISON) $(OBJ) $(GEN_OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TAR)
 
-$(DEBUG_TAR): $(FLEX) $(BISON) $(OBJ:.o=.debug.o) $(GEN_OBJ)
+$(DEBUG_TAR): $(FLEX) $(BISON) $(OBJ:.o=.debug.o) $(GEN_OBJ:.o=.debug.o)
 	$(CC) $(DEBUG_CFLAGS) $(OBJ:.o=.debug.o) -o $(DEBUG_TAR)
 
 debug: $(DEBUG_TAR)
