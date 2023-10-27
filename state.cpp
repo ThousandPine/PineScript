@@ -28,11 +28,6 @@ void state::push(const std::string &s)
     _exec_stack.emplace_back(s);
 }
 
-void state::push(const std::string &s, const int end_lineno)
-{
-    _exec_stack.emplace_back(s + " (end on line " + std::to_string(end_lineno) + ")");
-}
-
 void state::pop()
 {
     if (_exec_stack.size())

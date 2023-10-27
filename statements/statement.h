@@ -19,7 +19,6 @@ class statement
 {
 protected:
     const std::string _exec_msg;
-    const int _end_lineno;
 
     virtual void init() const;
     virtual int run() const = 0;
