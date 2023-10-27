@@ -30,6 +30,6 @@ public:
     bool def_fn(const gc_ptr<function> &fn);
     gc_ptr<function> get_fn(const std::string &id);
 
-    bool def_var(gc_ptr<variable> var);
+    bool def_var(const gc_ptr<variable> &var);
     gc_ptr<variable> get_var(const std::string &id);
 };

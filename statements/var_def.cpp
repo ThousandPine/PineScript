@@ -7,7 +7,7 @@ vardef_statement::vardef_statement(const std::string &id, bool is_ref, int type,
 
 int vardef_statement::run() const
 {
-    variable *var = nullptr;
+    gc_ptr<variable> var = nullptr;
 
     if (this->_is_ref)
     {

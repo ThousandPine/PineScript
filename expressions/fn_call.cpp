@@ -44,7 +44,7 @@ gc_ptr<function> fncall_expression::_fn_init() const
     for (; arg != nullptr && expr_node != nullptr; arg = arg->next, expr_node = expr_node->next)
     {
         /* 创建参数变量 */
-        variable *var = nullptr;
+        gc_ptr<variable> var = nullptr;
 
         if (arg->is_ref)
         {

@@ -61,7 +61,7 @@ bool symtable::def_fn(const gc_ptr<function> &fn)
     return false;
 }
 
-bool symtable::def_var(gc_ptr<variable> var)
+bool symtable::def_var(const gc_ptr<variable> &var)
 {
     if (var == nullptr)
     {

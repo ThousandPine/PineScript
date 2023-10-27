@@ -13,8 +13,8 @@ private:
     variable(const std::string &id, const gc_ptr<value> &val, int type, bool is_ref);
 
 public:
-    static variable *create_new(const std::string &id, int type, const gc_ptr<const value> &val);
-    static variable *create_ref(const std::string &id, int type, const gc_ptr<value> &val);
+    static gc_ptr<variable> create_new(const std::string &id, int type, const gc_ptr<const value> &val);
+    static gc_ptr<variable> create_ref(const std::string &id, int type, const gc_ptr<value> &val);
 
     const std::string id;
     const int type;

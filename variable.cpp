@@ -12,7 +12,7 @@
  * 
  * @warning 失败情况：val == nullptr
  */
-variable *variable::create_new(const std::string &id, int type, const gc_ptr<const value> &val)
+gc_ptr<variable> variable::create_new(const std::string &id, int type, const gc_ptr<const value> &val)
 {
     if (val == nullptr)
     {
@@ -38,7 +38,7 @@ variable *variable::create_new(const std::string &id, int type, const gc_ptr<con
  * 
  * @warning 失败情况：val == nullptr
  */
-variable *variable::create_ref(const std::string &id, int type, const gc_ptr<value> &val)
+gc_ptr<variable> variable::create_ref(const std::string &id, int type, const gc_ptr<value> &val)
 {
     if (val == nullptr)
     {
