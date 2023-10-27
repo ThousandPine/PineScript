@@ -24,7 +24,7 @@ gc_ptr<const value> array_literal::get_value() const
         return nullptr;
     }
 
-    int size = ((const int_value *)&*size_val)->val();
+    int size = ((const int_value *)size_val.ptr())->val();
     if (size <= 0)
     {
         state::error("the size of an array must be greater than zero");

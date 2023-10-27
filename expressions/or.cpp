@@ -22,7 +22,7 @@ gc_ptr<const value> or_expression::get_value() const
             state::error("the operator '||' must be of type '" + value::type_to_name(BOOL_T) + "', but the provided operand type is of type '" + val->type_name() + "'");
             return nullptr;
         }
-        if (true == ((const bool_value *)&*val) -> val())
+        if (true == ((const bool_value *)val.ptr()) -> val())
         {
             return val;
         }

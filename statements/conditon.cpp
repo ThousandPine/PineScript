@@ -16,5 +16,5 @@ int condition::run() const
         state::error("the conditional statement only supports operands of type '" + value::type_to_name(BOOL_T) + "', but the provided operand is of type '" + val->type_name() + "'");
         return ERROR;
     }
-    return ((const bool_value *)&*val)->val() ? MATCH : MISMATCH;
+    return ((const bool_value *)val.ptr())->val() ? MATCH : MISMATCH;
 }
