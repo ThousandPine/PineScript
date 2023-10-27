@@ -1,7 +1,7 @@
 #include "return.h"
 #include "../state.h"
 #include "../function.h"
-#include "../values/value.h"
+#include "../values/void.h"
 
 return_statement::return_statement(const gc_ptr<expression> &expr, int end_lineno)
     : statement("return", end_lineno),
@@ -9,7 +9,7 @@ return_statement::return_statement(const gc_ptr<expression> &expr, int end_linen
 
 int return_statement::run() const
 {
-    auto val = this->_expr == nullptr ? value::create(VOID_T) : this->_expr->get_value();
+    auto val = this->_expr == nullptr ? new void_value() : this->_expr->get_value();
 
     if (val == nullptr)
     {

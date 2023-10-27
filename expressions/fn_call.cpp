@@ -1,6 +1,6 @@
 #include "fn_call.h"
 #include "../symtable.h"
-#include "../values/value.h"
+#include "../values/void.h"
 #include "../state.h"
 
 fncall_expression::fncall_expression(const std::string &id, const gc_ptr<expr_list> &args) : _id(id), _expr_list(args) {}
@@ -112,7 +112,7 @@ gc_ptr<const value> fncall_expression::_fn_run(gc_ptr<function> fn) const
     /* 处理返回值 */
     if (fn->type == VOID_T)
     {
-        return value::create(VOID_T);
+        return new void_value();
     }
 
     /* 无返回值 */
