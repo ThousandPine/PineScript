@@ -9,7 +9,7 @@ gc_ptr<const value> fncall_expression::get_value() const
 {
     gc_ptr<const value> ret_val = nullptr;
 
-    symtable::instance().enter_scope();
+    symtable::instance().enter_local();
 
     auto fn = _fn_init();
 
@@ -24,7 +24,7 @@ gc_ptr<const value> fncall_expression::get_value() const
         state::pop();
     }
 
-    symtable::instance().exit_scope();
+    symtable::instance().exit_local();
     return ret_val;
 }
 
