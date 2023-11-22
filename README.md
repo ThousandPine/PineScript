@@ -25,14 +25,14 @@ Bison: 3.8.2
 #### 构建命令
 
 ```
-make build 	// 生成带有-O2优化的release版本(pine)
-make debug 	// 生成带有-g选项的debug版本(pine.d)
+make build  // 生成带有-O2优化的release版本(pine)
+make debug  // 生成带有-g选项的debug版本(pine.d)
 ```
 
 ## 运行
 
 ```
-./pine 	src_path
+./pine src_path
 ```
 
 传入源文件路径参数执行，暂时只支持单文件
@@ -109,21 +109,21 @@ fn main() -> int {
 }
 ```
 
-## 数据类型
+## 语法
 
-### 类型说明
+### 数据类型
 
 | 数据类型 | 说明                     |
 | -------- | ------------------------ |
-| int      | 32位整型                 |
-| float    | 32位浮点                 |
+| int      | 32位有符号整型           |
+| float    | 32位单精度浮点数         |
 | char     | 单字节字符，支持转义字符 |
 | string   | 字符串，支持转义字符     |
-| bool     | true false               |
+| bool     | true\|false              |
 | array    | 数组，支持多维嵌套       |
 | void     | 无                       |
 
-### 运算符表
+### 运算符
 
 运算符优先级从左到右下降
 
@@ -139,7 +139,66 @@ fn main() -> int {
 | array           | ✔    |          |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |
 | void            |      |          |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |
 
-### 类型转换表
+### 基本内容
+
+- 语句结束符为`;`
+- 支持单行注释`//`和块注释`/* */`
+- 程序入口函数为`main`
+
+### 定义变量
+
+每个let语句只能定义一个变量，并且必须初始化
+
+```
+let name: type = expression; // type不包括void
+let name = expression;       // 根据expression自动推导类型
+```
+
+**支持Shadowing，同作用域内可重复定义变量**
+
+```
+let a:int = 0;      // 创建int变量并初始化为0
+let b = true;       // 自动推导为bool类型
+let a:char = '\n';  // Shadowing重定义
+```
+
+### 数组定义
+
+通过`[expression; size]`的形式定义数组的字面量，其中的`expression`的值也可以是数组，以此来嵌套定义多维数组
+
+```
+let arr = [0; 5];             // 定义一个初始值为5个0的int数组
+let arr: array = [2.33; 5];   // 定义一个初始值为5个2.33的float数组
+let arr: array = [[0; 5]; 5]; // 定义一个size为5x5的int数组
+```
+
+为了防止出现循环引用，数组**定义后**只能对基本单元进行赋值和修改，不能对数组本身进行赋值操作（比如把一个数组赋值给另一个数组）
+
+```
+let a = [[0; 5]; 5];
+
+a[0][0] = 1;   // success
+a[0] = [1; 5]; // <error> type 'array' does not support '=' operations with 'array'
+```
+
+### 类型转换
+
+由于之前的语法中规定了只能在相同的类型之间进行运算，因此就需要类型转换来加强语言的灵活性
+
+类型转换的语法如下
+
+```
+expression as type                 // 将expression的类型转为type
+expression as type_1 as type_2 ... // 支持连续转换
+```
+
+例如将`float`转为`int`
+
+```
+let a:int = 1e5 as int; // 将float转为int之后才能合法地初始化int变量
+```
+
+类型转换的真值表如下
 
 | 源类型\目标类型 | int  | float | char | string | bool | array | void |
 | --------------- | ---- | ----- | ---- | ------ | ---- | ----- | ---- |
@@ -151,58 +210,30 @@ fn main() -> int {
 | array           |      |       |      |        |      |       |      |
 | void            |      |       |      |        |      |       |      |
 
-## 语法
+### 定义函数
 
-### 基本内容
-
-- 语句结束符为`;`
-- 支持单行注释`//`和块注释`/* */`
-- 程序入口函数为`main`
-
-### 作用域
+只能在全局作用域定义函数，使用`return`语句返回值，返回类型为`void`时可以不用`return`
 
 ```
-{
-	statements
+fn func(arg1: type, arg2: type, ...) -> return_type {
+    statements
 }
 ```
 
-通过`{}`创建一块新的作用域
-
-### 定义变量
+例如定义`max`函数返回最大值
 
 ```
-let name: type = value; // type不包括void
-let name = value;		// 根据value自动推导类型
+fn max(x: int, y: int) -> int {
+    if (x >= y)
+        return x;
+    else
+        return y;
+}
 ```
 
-每行let语句只能定义一个变量，并且必须初始化
+### 左值引用
 
-**支持Shadowing，同作用域内可重复定义变量**
-
-```
-/* 样例 */
-let a:int = 0;		// 创建int变量并初始化为0
-let b = true;		// 自动推导为bool类型
-let a:char = '\n';  // Shadowing重定义
-```
-
-### 数组
-
-```
-/* 字面量 */
-[value; size] // value可以是数组的字面量，可以嵌套定义为多维数组
-/* 样例 */
-let name = [0;5];     		 // 定义一个初始值为5个0的int数组
-let name: array = [2.33;5];	 // 定义一个初始值为5个2.33的float数组
-let name: array = [[0;5];5]; // 定义一个size为5x5的int数组
-```
-
-为了防止出现循环引用，数组**定义后**只能对基本单元进行赋值和修改，不能对数组本身进行赋值操作（比如把一个数组赋值给另一个数组）。
-
-### 左值引用 
-
-定义变量和声明函数参数时，在变量名之间加上`&`即可创建左值引用。
+该语法参考自C++，定义变量和声明函数参数时，在变量名之间加上`&`即可创建左值引用。
 
 ```
 let a = 0;
@@ -212,71 +243,60 @@ let &b = a; // b是a的引用
 ```
 // 基于左值引用的swap函数
 fn swap(&a: int, &b: int) -> void {
-	let c = a;
-	a = b;
-	b = c;
-	return;
+    let c = a;
+    a = b;
+    b = c;
+    return;
 }
 ```
 
-### 定义函数
+### 作用域
+
+在`{}`内部创建一个新的作用域
 
 ```
-fn fun(arg1: type, arg2: type, ...) -> type {
-	STATEMENTS
+{
+    statements
 }
-```
-
-只能在全局作用域定义，返回类型包括`void`
-
-```
-fn max(x: int, y: int) -> int {
-	if (x >= y)
-		return x;
-	else
-		return y;
-}
-```
-
-### 类型转换
-
-```
-value as type				  // 转换类型不包括void
-value as type_1 as type_2 ... // 支持连续转换
-```
-
-```
-let a:int = 1e5 as int;	// 将float转为int之后才能合法地赋值
 ```
 
 ### 控制流语句
 
-语法与C语言相同
-
-condition的结果必须为bool类型
-
-#### if-else
+包括`if-else`和`while`，语法格式与C语言相同，其中`expression`返回的结果必须为`bool`类型
 
 ```
-if (condition)
-	statement
+if (expression)
+    statement
+else if (expression)
+    statement
 else
-	statement
+    statement
 ```
 
-#### while
-
 ```
-while (condition) 
-	statement
+while (expression)
+    statement
 ```
 
 ### 输入&输出
+
+`input`， `output`分别为输入和输出的关键字，使用反引号包裹参数列表，参数之间用逗号分隔
 
 ```
 input `arg1, arg2, ...`
 output `arg1, arg2, ...`
 ```
 
-参数列表的两侧为反引号
+例如输入两个数字，并将他们交换后输出
 
+```
+let a = 0;
+let b = 0;
+let c = 0;
+input `a, b`;
+/* swap a b */
+c = a;
+a = b;
+b = c;
+output `a, ' ', b`;
+```
