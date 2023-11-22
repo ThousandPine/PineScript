@@ -90,6 +90,6 @@ gc_ptr<value> value::operator-() const
 bool value::operator=(const value &val)
 {
     state::error((std::string) "type '" +
-                 this->type_name() + "' does not support '=' operations with" + val.type_name());
+                 this->type_name() + "' does not support '=' operations with '" + val.type_name() + "'");
     return false;
 }
