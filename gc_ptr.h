@@ -73,8 +73,11 @@ public:
 
     gc_ptr<T> &operator=(const gc_ptr<T> &p)
     {
-        this->_deref();
-        this->_ref(p._ptr, p._cnt);
+        if (p._ptr != this->_ptr)
+        {
+            this->_deref();
+            this->_ref(p._ptr, p._cnt);
+        }
         return *this;
     }
 
