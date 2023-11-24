@@ -10,6 +10,8 @@
     extern char *yytext;
     extern int yylineno;
     int yylex(yy::parser::value_type *value);
+
+    statement* statements_head = nullptr;
 }
 
 %require "3.2"
@@ -50,22 +52,21 @@
 %type <expr> expr fn_call
 %type <expr_l> expr_list expr_node
 %type <args> args_def arg_def_list arg_def
-%type <stmt> fn_statements fn_statement var_def input output condition while_loop loop_statement loop_statements
+%type <stmt> fn_def global_statements global_statement fn_statements fn_statement var_def input output condition while_loop loop_statement loop_statements
 
 %%
 
     /*  */
-    global_statements: /* e */
-                    | global_statement global_statements
+    global_statements: /* e */                              {$$ = nullptr;}
+                    | global_statement global_statements    {$$ = statements_head = $1; $1->next = $2;}
 
-    global_statement: EOL
-                    | fn_def
-                    | var_def       {$1->exec(); delete $1;}
+    global_statement: EOL           {$$ = new blank_statement();}
+                    | fn_def        {$$ = $1;}
+                    | var_def       {$$ = $1;}
 
     /* function */
     fn_def: FN ID '(' args_def ')' RARROW fn_type '{' fn_statements '}' {
-        fndef_statement fn_def(new function($ID, $fn_type, $args_def, $fn_statements));
-        fn_def.exec();
+        $$ = new fndef_statement(new function($ID, $fn_type, $args_def, $fn_statements));
     }
 
     args_def: /* e */           {$$ = nullptr;}

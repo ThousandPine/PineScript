@@ -6,6 +6,8 @@ extern int yylineno;
 extern char *yytext;
 extern FILE *yyin;
 
+extern statement* statements_head;
+
 int main(int argc, char **argv)
 {
     if (argc < 2)
@@ -26,9 +28,27 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    // 语法分析
     yy::parser parser;
     parser.parse();
 
+    gc_ptr<statement> statements = statements_head; // 使用gc_ptr接管指针
+
+    // 执行全局语句
+    for (auto stmt = statements; stmt != nullptr; stmt = stmt->next)
+    {
+        switch (stmt->exec())
+        {
+        case DONE:
+            break;
+        
+        // ERROR
+        default:
+            return -1;
+        }
+    }
+
+    // 执行main函数
     fncall_expression main_fn("main", nullptr);
     main_fn.get_value();
 }
