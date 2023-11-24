@@ -45,17 +45,15 @@ public:
         this->_ref(ptr, ptr != nullptr ? new int(0) : nullptr);
     }
 
+    gc_ptr(T *ptr, int *cnt)
+    {
+        this->_ref(ptr, cnt);
+    }
+
     gc_ptr(const gc_ptr<T> &p)
     {
         this->_deref();
-        this->_ref(p.ptr(), p.cnt());
-    }
-
-    template <typename U>
-    gc_ptr(const gc_ptr<U> &p)
-    {
-        this->_deref();
-        this->_ref(p.ptr(), p.cnt());
+        this->_ref(p._ptr, p._cnt);
     }
 
     ~gc_ptr()
@@ -63,8 +61,15 @@ public:
         _deref();
     }
 
-    T *ptr() const { return this->_ptr; }
-    int *cnt() const { return this->_cnt; }
+    T *ptr() const
+    {
+        return this->_ptr;
+    }
+
+    operator gc_ptr<const T>() const
+    {
+        return {this->_ptr, this->_cnt};
+    }
 
     gc_ptr<T> &operator=(const gc_ptr<T> &p)
     {
