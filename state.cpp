@@ -6,7 +6,7 @@ std::vector<std::string> state::_exec_stack;
 
 void state::error(const std::string &s)
 {
-    std::cout << "<error> " << s << std::endl;
+    std::cout << "\n<error> " << s << std::endl;
     print_stack();
 }
 
