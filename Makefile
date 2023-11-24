@@ -11,6 +11,7 @@ OBJ=$(SRC:.cpp=.o)
 GEN_OBJ=$(BISON:.cpp=.o) $(FLEX:.cpp=.o)
 
 -include $(DEPS)
+-include $(DEPS:.d=.debug.d)
 
 $(FLEX): lex.l
 	flex -o lex.yy.cpp lex.l
@@ -22,7 +23,7 @@ $(BISON): parse.y
 	$(CC) $(CFLAGS) -c $< -o $@ -MMD -MF $*.d -MP 
 
 %.debug.o: %.cpp
-	$(CC) $(DEBUG_CFLAGS) -c $< -o $@ -MMD -MF $*.d -MP 
+	$(CC) $(DEBUG_CFLAGS) -c $< -o $@ -MMD -MF $*.debug.d -MP 
 
 $(TAR): $(FLEX) $(BISON) $(OBJ) $(GEN_OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TAR)
@@ -35,6 +36,6 @@ debug: $(DEBUG_TAR)
 build: $(TAR)
 
 clean:
-	rm -rf $(TAR) $(DEBUG_TAR) $(BISON_HEAD) $(BISON) $(FLEX) $(OBJ) $(OBJ:.o=.debug.o) $(DEPS)
+	rm -rf $(TAR) $(DEBUG_TAR) $(BISON_HEAD) $(BISON) $(FLEX) $(OBJ) $(OBJ:.o=.debug.o) $(DEPS) $(DEPS:.d=.debug.d)
 
 .PHONY: clean
