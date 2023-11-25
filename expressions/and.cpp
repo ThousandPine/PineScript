@@ -19,7 +19,7 @@ gc_ptr<const value> and_expression::get_value() const
         }
         if (val->type != BOOL_T)
         {
-        state::error("the '&&' operator only supports operands of type '" + value::type_to_name(BOOL_T) + "', but the provided operand is of type '" + val->type_name() + "'");
+            state::error("the '&&' operator only supports operands of type '" + value::type_to_name(BOOL_T) + "', but the provided operand is of type '" + val->type_name() + "'");
             return nullptr;
         }
         if (false == ((const bool_value *)val.ptr())->val())

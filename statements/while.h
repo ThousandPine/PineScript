@@ -12,6 +12,5 @@ protected:
     virtual void exit() const;
 
 public:
-    
-    while_statement(const gc_ptr<statement> &condition, const gc_ptr<statement> &loop_run);
+        while_statement(const gc_ptr<statement> &condition, const gc_ptr<statement> &loop_run);
 };

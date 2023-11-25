@@ -20,6 +20,6 @@ gc_ptr<value> index_expression::get_ref() const
     {
         return nullptr;
     }
-    
+
     return (*ref)[(*val)];
 }

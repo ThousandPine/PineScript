@@ -8,7 +8,7 @@
 class expression
 {
 public:
-    virtual ~expression(){}
+    virtual ~expression() {}
 
     virtual gc_ptr<const value> get_value() const = 0;
     virtual gc_ptr<value> get_ref() const;

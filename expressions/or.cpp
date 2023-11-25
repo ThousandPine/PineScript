@@ -10,19 +10,19 @@ gc_ptr<const value> or_expression::get_value() const
     /* 分开计算两个表达式实现短路 */
     decltype(this->_expr1) exprs[]{this->_expr1, this->_expr2};
 
-    for(int i = 0; i < 2; ++i)
+    for (int i = 0; i < 2; ++i)
     {
         auto val = exprs[i]->get_value();
         if (val == nullptr)
         {
             return nullptr;
         }
-        if(val->type != BOOL_T)
+        if (val->type != BOOL_T)
         {
             state::error("the operator '||' must be of type '" + value::type_to_name(BOOL_T) + "', but the provided operand type is of type '" + val->type_name() + "'");
             return nullptr;
         }
-        if (true == ((const bool_value *)val.ptr()) -> val())
+        if (true == ((const bool_value *)val.ptr())->val())
         {
             return val;
         }

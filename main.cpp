@@ -6,7 +6,7 @@ extern int yylineno;
 extern char *yytext;
 extern FILE *yyin;
 
-extern statement* statements_head;
+extern statement *statements_head;
 
 int main(int argc, char **argv)
 {
@@ -20,9 +20,9 @@ int main(int argc, char **argv)
         puts("Multiple filenames provided. This interpreter only supports one file at a time.");
         return 1;
     }
-    
+
     yyin = fopen(argv[1], "r");
-    if(yyin == NULL)
+    if (yyin == NULL)
     {
         puts("Unable to open the file path provided. Please check the file path and try again.");
         return 1;
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
         {
         case DONE:
             break;
-        
+
         // ERROR
         default:
             return -1;
@@ -60,7 +60,7 @@ int yyerror(const char *s)
     return 1;
 }
 
-void yy::parser::error(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const& e)
+void yy::parser::error(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>> const &e)
 {
     yyerror(e.c_str());
     return;

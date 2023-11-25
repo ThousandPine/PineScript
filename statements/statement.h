@@ -28,6 +28,6 @@ public:
     gc_ptr<statement> next = nullptr;
 
     statement(const std::string &exec_msg, const int end_lineno);
-    virtual ~statement(){}
+    virtual ~statement() {}
     virtual int exec() const final;
 };

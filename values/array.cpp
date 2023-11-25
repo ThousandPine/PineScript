@@ -58,7 +58,7 @@ gc_ptr<value> array_value::operator[](const value &val) const
     size_t index = ((const int_value *)&val)->val();
     if (index >= this->_vals.size())
     {
-        state::error("index "+ std::to_string(index) +" of operator '[]' is out of bounds");
+        state::error("index " + std::to_string(index) + " of operator '[]' is out of bounds");
         return nullptr;
     }
 

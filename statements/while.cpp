@@ -23,7 +23,7 @@ int while_statement::run() const
         {
         case MATCH:
             break;
-            
+
         case MISMATCH:
             return DONE;
         case ERROR:

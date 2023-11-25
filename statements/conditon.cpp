@@ -2,7 +2,7 @@
 #include "../state.h"
 #include "../values/bool.h"
 
-condition::condition(const gc_ptr<expression> &expr, int end_lineno) : statement("condition judgment", end_lineno) , _expr(expr) {}
+condition::condition(const gc_ptr<expression> &expr, int end_lineno) : statement("condition judgment", end_lineno), _expr(expr) {}
 
 int condition::run() const
 {

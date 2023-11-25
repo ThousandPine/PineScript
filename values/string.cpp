@@ -20,7 +20,7 @@ string_value::string_value(const char *s) : value(STRING_T)
         if (c.second == -1)
         {
             ++s;
-            continue;;
+            continue;
         }
         this->_val.push_back(c.first);
         s += c.second;

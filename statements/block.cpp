@@ -1,5 +1,4 @@
 #include "block.h"
-#include "../state.h"
 #include "../symtable.h"
 
 block_statement::block_statement(const gc_ptr<statement> &list) : statement("", -1), _list(list) {}
@@ -7,7 +6,7 @@ block_statement::block_statement(const gc_ptr<statement> &list) : statement("", 
 void block_statement::init() const
 {
     /* 不创建执行记录 */
-    
+
     symtable::instance().enter_scope();
 }
 

@@ -1,7 +1,7 @@
 #include "fn_def.h"
 #include "../symtable.h"
 
-fndef_statement::fndef_statement(const gc_ptr<function> &fn) : statement("", -1) , _fn(fn) {}
+fndef_statement::fndef_statement(const gc_ptr<function> &fn) : statement("", -1), _fn(fn) {}
 
 void fndef_statement::init() const
 {

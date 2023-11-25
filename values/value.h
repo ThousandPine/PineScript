@@ -29,7 +29,7 @@ public:
     const int type;
 
     value(int type);
-    virtual ~value(){}
+    virtual ~value() {}
 
     virtual void input();
     virtual void output() const;
