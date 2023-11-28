@@ -62,9 +62,18 @@ fn fib(n:int) -> int {
 }
 
 fn main() -> int {
-    let a = 233;
-    input `a`;
-    output `fib(a)`;
+    let n = 0;
+    let i = 0;
+    input `n`;
+
+    while (i <= n)
+    {
+        output `fib(i)`;
+        
+        if (i < n)
+            output `", "`;
+        i += 1;
+    }
     return 0;
 }
 ```
@@ -99,9 +108,9 @@ fn main() -> int {
             input `dp[i][j]`;
             dp[i][j] = dp[i][j] + max(dp[i - 1][j - 1], dp[i - 1][j]);
             ans = max(dp[i][j], ans);
-            j = j + 1;
+            j += 1;
         }
-        i = i + 1;
+        i += 1;
     }
 
     output `ans`;
