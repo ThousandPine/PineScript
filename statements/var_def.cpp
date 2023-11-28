@@ -7,26 +7,8 @@ vardef_statement::vardef_statement(const std::string &id, bool is_ref, int type,
 
 int vardef_statement::run() const
 {
-    gc_ptr<variable> var = nullptr;
+    gc_ptr<variable> var = _is_ref ? variable::create_ref(_id, _type, _expr->get_ref())
+                                   : variable::create_new(_id, _type, _expr->get_value());
 
-    if (this->_is_ref)
-    {
-        auto val = this->_expr->get_ref();
-        var = variable::create_ref(this->_id, this->_type, val);
-    }
-    else
-    {
-        auto val = this->_expr->get_value();
-        var = variable::create_new(this->_id, this->_type, val);
-    }
-
-    if (var == nullptr)
-    {
-        return ERROR;
-    }
-    if (symtable::instance().def_var(var) == false)
-    {
-        return ERROR;
-    }
-    return DONE;
+    return var != nullptr && symtable::instance().def_var(var) ? DONE : ERROR;
 }
