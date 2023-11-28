@@ -19,7 +19,7 @@
 
 %token IF ELSE WHILE BREAK CONTINUE RETURN FN AS LET INPUT OUTPUT
 %token INT_T CHAR_T FLOAT_T STRING_T BOOL_T ARRAY_T VOID_T
-%token EQ NEQ GEQ LEQ AND OR RARROW EOL
+%token EQ NEQ GEQ LEQ ADDEQ SUBEQ DIVEQ MULEQ MODEQ AND OR RARROW EOL
 %token INT FLOAT CHAR STRING BOOL
 
 %token <s> ID
@@ -27,7 +27,7 @@
 %nonassoc LOWER_THAN_ELSE    
 %nonassoc ELSE
 %left ','
-%right '='
+%right '=' ADDEQ SUBEQ DIVEQ MULEQ MODEQ
 %left AND OR
 %left EQ NEQ
 %left '>' '<' GEQ LEQ
@@ -167,6 +167,11 @@
         | expr AND expr     {$$ = new and_expression($1, $3);}
         | expr OR expr      {$$ = new or_expression($1, $3);}
         | expr '=' expr     {$$ = new assign_expression($1, $3);}
+        | expr ADDEQ expr   {gc_ptr expr1 = $1; $$ = new assign_expression(expr1, new add_expression(expr1, $3));}
+        | expr SUBEQ expr   {gc_ptr expr1 = $1; $$ = new assign_expression(expr1, new sub_expression(expr1, $3));}
+        | expr MULEQ expr   {gc_ptr expr1 = $1; $$ = new assign_expression(expr1, new mul_expression(expr1, $3));}
+        | expr DIVEQ expr   {gc_ptr expr1 = $1; $$ = new assign_expression(expr1, new div_expression(expr1, $3));}
+        | expr MODEQ expr   {gc_ptr expr1 = $1; $$ = new assign_expression(expr1, new mod_expression(expr1, $3));}
 
     /*  */
     fn_call: ID '(' expr_list ')'     {$$ = new fncall_expression($ID, $expr_list);}
