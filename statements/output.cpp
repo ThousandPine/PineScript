@@ -1,7 +1,7 @@
 #include "output.h"
 
 output_statement::output_statement(const gc_ptr<expr_list> &expr_list, int end_lineno)
-    : statement("input", end_lineno),
+    : statement("output", end_lineno),
       _expr_list(expr_list) {}
 
 int output_statement::run() const
