@@ -54,9 +54,9 @@ fn fib(n:int) -> int {
     vis[n] = true;
 
     if(n == 0)
-        return mem[n] = 1;
+        return 0;
     else if(n == 1)
-        return mem[n] = 1;
+        return 1;
     else
         return mem[n] = fib(n - 1) + fib(n - 2);
 }
