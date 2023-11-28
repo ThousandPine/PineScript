@@ -105,17 +105,20 @@ gc_ptr<variable> symtable::get_var(const std::string &id)
 {
     auto &st = _var_tab[id];
 
-    if (this != &_global)
+    if (st.size())
     {
-        return st.size() ? st.top() : _global.get_var(id);
+        return st.top();
     }
 
-    if (st.empty())
+    auto &g_st = _global._var_tab[id];
+    
+    if (g_st.size())
     {
-        state::error("variable \"" + id + "\" is not defined");
-        return nullptr;
+        return g_st.top();
     }
-    return st.top();
+
+    state::error("variable \"" + id + "\" is not defined");
+    return nullptr;
 }
 
 void symtable::undef_var(const std::string &id)
