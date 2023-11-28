@@ -15,7 +15,7 @@ gc_ptr<const value> fncall_expression::get_value() const
 
     if (fn != nullptr)
     {
-        state::push("call function \"" + this->_id + "\"");
+        state::push("call function \"" + _id + "\"");
         function::fncall_stack.push(fn);
 
         ret_val = _fn_run(fn);

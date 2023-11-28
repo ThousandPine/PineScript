@@ -12,7 +12,7 @@ string_value::string_value(const char *s) : value(STRING_T)
     {
         if (*s != '\\')
         {
-            this->_val.push_back(*s++);
+            _val.push_back(*s++);
             continue;
         }
 
@@ -22,19 +22,19 @@ string_value::string_value(const char *s) : value(STRING_T)
             ++s;
             continue;
         }
-        this->_val.push_back(c.first);
+        _val.push_back(c.first);
         s += c.second;
     }
 }
 
 std::string string_value::to_string() const
 {
-    return this->_val;
+    return _val;
 }
 
 gc_ptr<value> string_value::copy() const
 {
-    return new string_value(this->_val);
+    return new string_value(_val);
 }
 
 gc_ptr<value> string_value::convert(int type) const

@@ -5,7 +5,7 @@
 #define VALUE_IO_TEMPLATE(value_type)   \
     void value_type::input()            \
     {                                   \
-        std::cin >> this->_val;         \
+        std::cin >> _val;         \
     }                                   \
     void value_type::output() const     \
     {                                   \
@@ -21,7 +21,7 @@
                          this->type_name() + "' does not support '" + #op + "' operations with '" + val.type_name() + "'"); \
             return nullptr;                                                                                                 \
         }                                                                                                                   \
-        return new return_type(this->_val op((const value_type *)&val)->_val);                                              \
+        return new return_type(_val op((const value_type *)&val)->_val);                                              \
     }
 
 #define VALUE_ASSIGN_TEMPLATE(value_type)                                                                         \
@@ -33,6 +33,6 @@
                          this->type_name() + "' does not support '=' operations with '" + val.type_name() + "'"); \
             return false;                                                                                         \
         }                                                                                                         \
-        this->_val = ((const value_type *)&val)->_val;                                                            \
+        _val = ((const value_type *)&val)->_val;                                                            \
         return true;                                                                                              \
     }

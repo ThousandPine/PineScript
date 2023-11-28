@@ -8,17 +8,17 @@ float_value::float_value(float val) : value(FLOAT_T), _val(val) {}
 
 float_value::float_value(const char *s) : value(FLOAT_T)
 {
-    this->_val = atof(s);
+    _val = atof(s);
 }
 
 std::string float_value::to_string() const
 {
-    return std::to_string(this->_val);
+    return std::to_string(_val);
 }
 
 gc_ptr<value> float_value::copy() const
 {
-    return new float_value(this->_val);
+    return new float_value(_val);
 }
 
 gc_ptr<value> float_value::convert(int type) const
@@ -31,7 +31,7 @@ gc_ptr<value> float_value::convert(int type) const
         break;
 
     case INT_T:
-        val = new int_value(this->_val);
+        val = new int_value(_val);
         break;
 
     case STRING_T:
@@ -47,7 +47,7 @@ gc_ptr<value> float_value::convert(int type) const
 
 gc_ptr<value> float_value::operator-() const
 {
-    return new float_value(-this->_val);
+    return new float_value(-_val);
 }
 
 VALUE_IO_TEMPLATE(float_value)

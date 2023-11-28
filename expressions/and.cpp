@@ -8,7 +8,7 @@ and_expression::and_expression(const gc_ptr<expression> &expr1, const gc_ptr<exp
 gc_ptr<const value> and_expression::get_value() const
 {
     /* 分开计算两个表达式实现短路 */
-    decltype(this->_expr1) exprs[]{this->_expr1, this->_expr2};
+    decltype(_expr1) exprs[]{_expr1, _expr2};
 
     for (int i = 0; i < 2; ++i)
     {

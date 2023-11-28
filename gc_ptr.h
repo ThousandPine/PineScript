@@ -16,8 +16,8 @@ private:
 
     void _ref(T *ptr, int *cnt)
     {
-        this->_cnt = cnt;
-        this->_ptr = ptr;
+        _cnt = cnt;
+        _ptr = ptr;
         if (ptr != nullptr)
         {
             ++*_cnt;
@@ -26,7 +26,7 @@ private:
 
     void _deref()
     {
-        if (this->_ptr == nullptr || this->_cnt == nullptr)
+        if (_ptr == nullptr || _cnt == nullptr)
             return;
 
         if (--*_cnt == 0)
@@ -35,25 +35,25 @@ private:
             delete _ptr;
         }
 
-        this->_cnt = nullptr;
-        this->_ptr = nullptr;
+        _cnt = nullptr;
+        _ptr = nullptr;
     }
 
 public:
     gc_ptr(T *ptr)
     {
-        this->_ref(ptr, ptr != nullptr ? new int(0) : nullptr);
+        _ref(ptr, ptr != nullptr ? new int(0) : nullptr);
     }
 
     gc_ptr(T *ptr, int *cnt)
     {
-        this->_ref(ptr, cnt);
+        _ref(ptr, cnt);
     }
 
     gc_ptr(const gc_ptr<T> &p)
     {
-        this->_deref();
-        this->_ref(p._ptr, p._cnt);
+        _deref();
+        _ref(p._ptr, p._cnt);
     }
 
     ~gc_ptr()
@@ -63,20 +63,20 @@ public:
 
     T *ptr() const
     {
-        return this->_ptr;
+        return _ptr;
     }
 
     operator gc_ptr<const T>() const
     {
-        return {this->_ptr, this->_cnt};
+        return {_ptr, _cnt};
     }
 
     gc_ptr<T> &operator=(const gc_ptr<T> &p)
     {
-        if (p._ptr != this->_ptr)
+        if (p._ptr != _ptr)
         {
-            this->_deref();
-            this->_ref(p._ptr, p._cnt);
+            _deref();
+            _ref(p._ptr, p._cnt);
         }
         return *this;
     }
@@ -93,10 +93,10 @@ public:
 
     bool operator==(const T *ptr) const
     {
-        return this->_ptr == ptr;
+        return _ptr == ptr;
     }
     bool operator!=(const T *ptr) const
     {
-        return this->_ptr != ptr;
+        return _ptr != ptr;
     }
 };

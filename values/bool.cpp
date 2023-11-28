@@ -13,22 +13,22 @@ bool_value::bool_value(bool val) : value(BOOL_T), _val(val) {}
  */
 bool_value::bool_value(const char *s) : value(BOOL_T)
 {
-    this->_val = strcmp(s, "false");
+    _val = strcmp(s, "false");
 }
 
 bool bool_value::val() const
 {
-    return this->_val;
+    return _val;
 }
 
 std::string bool_value::to_string() const
 {
-    return this->_val ? "true" : "false";
+    return _val ? "true" : "false";
 }
 
 gc_ptr<value> bool_value::copy() const
 {
-    return new bool_value(this->_val);
+    return new bool_value(_val);
 }
 
 gc_ptr<value> bool_value::convert(int type) const
@@ -41,7 +41,7 @@ gc_ptr<value> bool_value::convert(int type) const
         break;
 
     case INT_T:
-        val = new int_value(this->_val);
+        val = new int_value(_val);
         break;
 
     case STRING_T:
@@ -57,7 +57,7 @@ gc_ptr<value> bool_value::convert(int type) const
 
 gc_ptr<value> bool_value::operator!() const
 {
-    return new bool_value(!this->_val);
+    return new bool_value(!_val);
 }
 
 VALUE_IO_TEMPLATE(bool_value)

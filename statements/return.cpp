@@ -9,7 +9,7 @@ return_statement::return_statement(const gc_ptr<expression> &expr, int end_linen
 
 int return_statement::run() const
 {
-    auto val = this->_expr == nullptr ? new void_value() : this->_expr->get_value();
+    auto val = _expr == nullptr ? new void_value() : _expr->get_value();
 
     if (val == nullptr)
     {

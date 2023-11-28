@@ -34,7 +34,7 @@ int while_statement::run() const
         }
 
         /* 执行循环体 */
-        exec_state = this->_loop_run->exec();
+        exec_state = _loop_run->exec();
         switch (exec_state)
         {
         case DONE:

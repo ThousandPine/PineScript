@@ -7,13 +7,13 @@ array_literal::array_literal(const gc_ptr<expression> &expr1, const gc_ptr<expre
 
 gc_ptr<const value> array_literal::get_value() const
 {
-    auto val = this->_expr1->get_value();
+    auto val = _expr1->get_value();
     if (val == nullptr)
     {
         return nullptr;
     }
 
-    auto size_val = this->_expr2->get_value();
+    auto size_val = _expr2->get_value();
     if (size_val == nullptr)
     {
         return nullptr;

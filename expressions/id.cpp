@@ -10,7 +10,7 @@ gc_ptr<const value> id_expression::get_value() const
 
 gc_ptr<value> id_expression::get_ref() const
 {
-    auto var = symtable::instance().get_var(this->_id);
+    auto var = symtable::instance().get_var(_id);
 
     if (var == nullptr)
     {

@@ -13,7 +13,7 @@ void block_statement::init() const
 int block_statement::run() const
 {
     int exec_state = DONE;
-    auto stmt = this->_list;
+    auto stmt = _list;
 
     while (stmt != nullptr)
     {

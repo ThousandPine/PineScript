@@ -10,12 +10,12 @@ gc_ptr<const value> assign_expression::get_value() const
 
 gc_ptr<value> assign_expression::get_ref() const
 {
-    auto ref = this->_expr1->get_ref();
+    auto ref = _expr1->get_ref();
     if (ref == nullptr)
     {
         return nullptr;
     }
-    auto val = this->_expr2->get_value();
+    auto val = _expr2->get_value();
     if (val == nullptr)
     {
         return nullptr;

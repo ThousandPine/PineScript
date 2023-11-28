@@ -6,7 +6,7 @@ statement::statement(const std::string &exec_msg, const int end_lineno)
 
 void statement::init() const
 {
-    state::push(this->_exec_msg);
+    state::push(_exec_msg);
     return;
 }
 

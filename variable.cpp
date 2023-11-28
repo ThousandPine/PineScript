@@ -61,22 +61,22 @@ variable::variable(const std::string &id, const gc_ptr<value> &val)
 
 gc_ptr<value> variable::get_value() const
 {
-    if (this->_val == nullptr)
+    if (_val == nullptr)
     {
         state::error("using uninitialized variables \"" + this->id + "\"");
         return nullptr;
     }
 
-    return this->_val;
+    return _val;
 }
 
 gc_ptr<value> variable::get_ref() const
 {
-    if (this->_val == nullptr)
+    if (_val == nullptr)
     {
         state::error("variable '" + this->id + "' cannot be referenced before it is initialized");
         return nullptr;
     }
 
-    return this->_val;
+    return _val;
 }

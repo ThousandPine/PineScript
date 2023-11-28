@@ -8,22 +8,22 @@ int_value::int_value(int val) : value(INT_T), _val(val) {}
 
 int_value::int_value(const char *s) : value(INT_T)
 {
-    this->_val = atoi(s);
+    _val = atoi(s);
 }
 
 int int_value::val() const
 {
-    return this->_val;
+    return _val;
 }
 
 std::string int_value::to_string() const
 {
-    return std::to_string(this->_val);
+    return std::to_string(_val);
 }
 
 gc_ptr<value> int_value::copy() const
 {
-    return new int_value(this->_val);
+    return new int_value(_val);
 }
 
 gc_ptr<value> int_value::convert(int type) const
@@ -36,15 +36,15 @@ gc_ptr<value> int_value::convert(int type) const
         break;
 
     case FLOAT_T:
-        val = new float_value(this->_val);
+        val = new float_value(_val);
         break;
 
     case BOOL_T:
-        val = new bool_value(this->_val);
+        val = new bool_value(_val);
         break;
 
     case CHAR_T:
-        val = new char_value(this->_val);
+        val = new char_value(_val);
         break;
 
     case STRING_T:
@@ -60,7 +60,7 @@ gc_ptr<value> int_value::convert(int type) const
 
 gc_ptr<value> int_value::operator-() const
 {
-    return new int_value(-this->_val);
+    return new int_value(-_val);
 }
 
 VALUE_IO_TEMPLATE(int_value)

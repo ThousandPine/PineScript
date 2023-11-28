@@ -20,10 +20,10 @@ int if_statement::run() const
     switch (exec_state)
     {
     case MATCH:
-        return this->_if_run->exec();
+        return _if_run->exec();
 
     case MISMATCH:
-        return this->_else_run == nullptr ? DONE : this->_else_run->exec();
+        return _else_run == nullptr ? DONE : _else_run->exec();
 
     case ERROR:
         return ERROR;

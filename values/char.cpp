@@ -72,17 +72,17 @@ char_value::char_value(char val) : value(CHAR_T), _val(val) {}
 
 char_value::char_value(const char *s) : value(CHAR_T)
 {
-    this->_val = s[1] != '\\' ? s[1] : char_value::escape(s + 1).first;
+    _val = s[1] != '\\' ? s[1] : char_value::escape(s + 1).first;
 }
 
 std::string char_value::to_string() const
 {
-    return std::string(&this->_val, 1);
+    return std::string(&_val, 1);
 }
 
 gc_ptr<value> char_value::copy() const
 {
-    return new char_value(this->_val);
+    return new char_value(_val);
 }
 
 gc_ptr<value> char_value::convert(int type) const
@@ -95,7 +95,7 @@ gc_ptr<value> char_value::convert(int type) const
         break;
 
     case INT_T:
-        val = new int_value(this->_val);
+        val = new int_value(_val);
         break;
 
     case STRING_T:
