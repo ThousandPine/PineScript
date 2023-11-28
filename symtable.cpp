@@ -2,7 +2,7 @@
 #include "state.h"
 #include "expressions/expressions.h"
 
-symtable symtable::_global(true);
+symtable symtable::_global{};
 std::stack<symtable> symtable::_local{};
 
 symtable &symtable::instance()
@@ -10,7 +10,7 @@ symtable &symtable::instance()
     return _local.empty() ? _global : _local.top();
 }
 
-symtable::symtable(bool is_global) : _is_global(is_global)
+symtable::symtable()
 {
     this->enter_scope();
 }
@@ -105,7 +105,7 @@ gc_ptr<variable> symtable::get_var(const std::string &id)
 {
     auto &st = _var_tab[id];
 
-    if (!_is_global)
+    if (this != &_global)
     {
         return st.size() ? st.top() : _global.get_var(id);
     }
