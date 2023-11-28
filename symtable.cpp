@@ -39,12 +39,12 @@ void symtable::exit_scope()
     _id_record.pop();
 }
 
-void symtable::enter_local()
+void symtable::push_local(const symtable &tab)
 {
-    _local.push({});
+    _local.emplace(tab);
 }
 
-void symtable::exit_local()
+void symtable::pop_local()
 {
     if (_local.size())
     {

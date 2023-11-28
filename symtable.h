@@ -23,15 +23,14 @@ private:
 
 public:
     static symtable &instance();
+    static void push_local(const symtable &tab);
+    static void pop_local();
 
     symtable();
     ~symtable();
 
     void enter_scope();
     void exit_scope();
-
-    void enter_local();
-    void exit_local();
 
     bool def_fn(const gc_ptr<function> &fn);
     gc_ptr<function> get_fn(const std::string &id);

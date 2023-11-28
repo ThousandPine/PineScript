@@ -9,35 +9,35 @@ gc_ptr<const value> fncall_expression::get_value() const
 {
     gc_ptr<const value> ret_val = nullptr;
 
-    symtable::instance().enter_local();
-
     auto fn = _fn_init();
 
-    if (fn != nullptr)
+    if (fn.first != nullptr)
     {
         state::push("call function \"" + _id + "\"");
-        function::fncall_stack.push(fn);
+        function::fncall_stack.push(fn.first);
+        symtable::push_local(fn.second);
 
-        ret_val = _fn_run(fn);
+        ret_val = _fn_run(fn.first);
 
+        symtable::pop_local();
         function::fncall_stack.pop();
         state::pop();
     }
 
-    symtable::instance().exit_local();
     return ret_val;
 }
 
-gc_ptr<function> fncall_expression::_fn_init() const
+std::pair<gc_ptr<function>, symtable> fncall_expression::_fn_init() const
 {
     /* 获取函数信息 */
     auto fn = symtable::instance().get_fn(_id);
     if (fn == nullptr)
     {
-        return nullptr;
+        return {nullptr, {}};
     }
 
     /* 传入参数 */
+    symtable new_local{};
     auto arg = fn->args;
     auto expr_node = _expr_list;
 
@@ -59,26 +59,26 @@ gc_ptr<function> fncall_expression::_fn_init() const
 
         if (var == nullptr)
         {
-            return nullptr;
+            return {nullptr, {}};
         }
-        if (symtable::instance().def_var(var) == false)
+        if (new_local.def_var(var) == false)
         {
-            return nullptr;
+            return {nullptr, {}};
         }
     }
 
     if (arg != nullptr && expr_node == nullptr)
     {
         state::error("too few arguments in function \"" + fn->id + "\" call");
-        return nullptr;
+        return {nullptr, {}};
     }
     if (arg == nullptr && expr_node != nullptr)
     {
         state::error("too many arguments in function \"" + fn->id + "\" call");
-        return nullptr;
+        return {nullptr, {}};
     }
 
-    return fn;
+    return {fn, new_local};
 }
 
 gc_ptr<const value> fncall_expression::_fn_run(gc_ptr<function> fn) const

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "expression.h"
+#include "../symtable.h"
 #include "../function.h"
 
 class fncall_expression : public expression
@@ -9,7 +10,7 @@ private:
     const std::string _id;
     const gc_ptr<expr_list> _expr_list;
 
-    gc_ptr<function> _fn_init() const;
+    std::pair<gc_ptr<function>, symtable> _fn_init() const;
     gc_ptr<const value> _fn_run(gc_ptr<function> fn) const;
 
 public:
